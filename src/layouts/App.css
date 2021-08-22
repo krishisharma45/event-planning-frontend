@@ -1,5 +1,8 @@
-.App {
+.NewApp {
   text-align: center;
+  background: white;
+  height: 100vh;
+  width: 100vw;
 }
 
 .App-logo {
@@ -13,7 +16,7 @@
   }
 }
 
-.App-header {
+.New-app-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,7 +27,7 @@
   color: white;
 }
 
-.App-link {
+.New-app-link {
   color: #61dafb;
 }
 

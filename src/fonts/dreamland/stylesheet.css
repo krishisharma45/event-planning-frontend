@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'dreamland';
+    src: url('dreamland.eot');
+    src: url('dreamland.eot?#iefix') format('embedded-opentype'),
+        url('dreamland.woff2') format('woff2'),
+        url('dreamland.woff') format('woff'),
+        url('dreamland.ttf') format('truetype'),
+        url('dreamland.svg#dreamland') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
