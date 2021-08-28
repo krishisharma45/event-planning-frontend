@@ -9,7 +9,7 @@ function Venue() {
               target="_blank"
               rel="noopener noreferrer"
             >chesapeake bay, md
-            </a> on april 24, 2022
+            </a> on april 23, 2022
         </div>
     );
 }

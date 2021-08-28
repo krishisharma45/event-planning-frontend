@@ -11,8 +11,8 @@
     font-display: swap;
 }
 
-.Travel {
-  height: 45vh;
+.Story {
+  min-height: 45vh;
   background-color: #282c34;
   display: flex;
   flex-direction: column;
@@ -23,36 +23,6 @@
   text-decoration: none;
 }
 
-.Travel-text {
-  width: 90vw;
-}
-
-.Lodging-options {
-  flex-direction: row;
-}
-
-.Travel-options {
-  flex-direction: row;
-  margin-bottom: 3vh;
-}
-
-
-li {
-  list-style-type: none;
-  display: inline;
-  flex-direction: row;
-}
-
-a {
-  text-decoration: none;
-  color: white;
-  flex-direction: column;
-}
-
-.TravelIcon {
-  padding-right: 10vw;
-}
-
 h1 {
   font-family: 'dreamland';
   font-weight: normal;
@@ -60,3 +30,7 @@ h1 {
   color: #F0C2D1;
 }
 
+p {
+  margin-top: 0.1vh;
+  margin-bottom: 0.1vh;
+}
