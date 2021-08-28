@@ -1,23 +1,21 @@
-import logo from 'images/logo.svg';
-import 'layouts/App.css';
+import 'styles/App.css';
 import Header from 'components/Header';
 import Venue from 'components/Venue';
 import Navigation from 'components/Navigation';
-import Content from 'components/Content';
 import Footer from 'components/Footer';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import GuestPortalRoutes from 'views/routes/GuestPortalRoutes';
 
-function App() {
+function GuestPortal() {
   return (
     <div className="App">
-      <header className="App-header">
         <Header />
         <Venue />
         <Navigation />
-        <Content />
+        <GuestPortalRoutes />
         <Footer />
-      </header>
     </div>
   );
-}
+};
 
-export default App;
+export default GuestPortal;

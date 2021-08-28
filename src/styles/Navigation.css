@@ -1,0 +1,50 @@
+.Navigation {
+  height: 10vh;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #F0C2D1;
+  font-size: 2.5vh;
+  text-decoration: none;
+}
+
+.Nav-events {
+  margin-right: 5vw;
+  text-decoration: none;
+  color: #F0C2D1;
+}
+
+.Nav-story {
+  margin-right: 5vw;
+  text-decoration: none;
+  color: #F0C2D1;
+}
+
+.Nav-faq {
+  margin-right: 5vw;
+  text-decoration: none;
+  color: #F0C2D1;
+}
+
+.Nav-travel {
+  text-decoration: none;
+  color: #F0C2D1;
+}
+
+.Nav-events:hover {
+  color: #61dafb;
+}
+
+.Nav-story:hover {
+  color: #61dafb;
+}
+
+.Nav-faq:hover {
+  color: #61dafb;
+}
+
+.Nav-travel:hover {
+  color: #61dafb;
+}
