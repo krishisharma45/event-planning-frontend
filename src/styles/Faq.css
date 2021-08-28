@@ -11,21 +11,24 @@
     font-display: swap;
 }
 
-.Header {
-  height: 25vh;
+.Faq {
   background-color: #282c34;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: white;
+  font-size: 2.5vh;
+  text-decoration: none;
 }
 
-.Header-names {
-  /*font-size: calc(30px + 2vmin);*/
+.Faq-text {
+  width: 75vw;
+}
+
+h1 {
   font-family: 'dreamland';
   font-weight: normal;
   font-style: normal;
-  font-size: 12vh; /* 18vh for desktop, 15vh for mobile */
-  color: #E88DAB;
-  /*border: 2px solid white;*/
 }
+

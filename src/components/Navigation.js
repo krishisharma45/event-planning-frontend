@@ -1,9 +1,10 @@
 import 'styles/Navigation.css';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
+import refreshPage from 'utils/refreshPage';
 
 function Navigation() {
     return (
-        <div className="Navigation">
+        <div onClick={refreshPage} className="Navigation">
             <Router>
                 <Link to="/events" className="Nav-events">events</Link>
                 <Link to="/story" className="Nav-events">story</Link>
