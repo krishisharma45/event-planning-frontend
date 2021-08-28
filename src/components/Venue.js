@@ -1,4 +1,4 @@
-import 'layouts/Venue.css';
+import '../styles/Venue.css';
 
 function Venue() {
     return (
