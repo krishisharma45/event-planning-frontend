@@ -1,4 +1,4 @@
-import '../styles/Venue.css';
+import 'styles/Venue.css';
 
 function Venue() {
     return (

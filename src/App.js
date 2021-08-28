@@ -1,12 +1,9 @@
 import 'styles/App.css';
 import GuestPortal from 'views/layouts/GuestPortal';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import refreshPage from 'utils/refreshPage';
 
 function App() {
-  function refreshPage() {
-    window.location.reload();
-  }
-
   return (
     <div onClick={refreshPage}>
         <BrowserRouter>
