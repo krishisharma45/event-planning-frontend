@@ -1,4 +1,4 @@
-import '../styles/Header.css';
+import 'styles/Header.css';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 
 function Header() {

@@ -1,4 +1,4 @@
-import '../styles/Navigation.css';
+import 'styles/Navigation.css';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 
 function Navigation() {
