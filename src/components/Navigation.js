@@ -7,9 +7,9 @@ function Navigation() {
         <div onClick={refreshPage} className="Navigation">
             <Router>
                 <Link to="/events" className="Nav-events">events</Link>
-                <Link to="/story" className="Nav-events">story</Link>
-                <Link to="/faq" className="Nav-events">faq</Link>
-                <Link to="/travel" className="Nav-events">travel</Link>
+                <Link to="/story" className="Nav-story">story</Link>
+                <Link to="/faq" className="Nav-faq">faq</Link>
+                <Link to="/travel" className="Nav-travel">travel</Link>
             </Router>
         </div>
     );

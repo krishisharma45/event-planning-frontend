@@ -1,12 +1,13 @@
 import 'styles/Header.css';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
+import refreshPage from 'utils/refreshPage';
 
 function Header() {
     return (
-    <div className="Header">
+    <div onClick={refreshPage} className="Header">
         <div className="Header-names">
             <Router>
-                <Link to="/" className="Nav-events">luv & krishi</Link>
+                <Link exact to="/" className="Header-text">luv <span className="Header-and">&</span> krishi</Link>
             </Router>
         </div>
     </div>

@@ -13,7 +13,7 @@
 
 .Header {
   height: 25vh;
-  background-color: #282c34;
+  background-color: #030E2A;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,6 +26,15 @@
   font-weight: normal;
   font-style: normal;
   font-size: 12vh; /* 18vh for desktop, 15vh for mobile */
-  color: #E88DAB;
+  align-items: center;
+  justify-content: center;
   /*border: 2px solid white;*/
+}
+
+.Header-text {
+  color: #F0C2D1;
+}
+
+.Header-and {
+  color: #E88DAB;
 }
