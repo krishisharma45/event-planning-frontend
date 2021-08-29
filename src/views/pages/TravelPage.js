@@ -21,7 +21,7 @@ function TravelPage() {
             <div className="Lodging-options">
                 <a href="https://www.hyatt.com/en-US/hotel/maryland/hyatt-regency-chesapeake-bay-golf-resort-spa-and-marina/chesa/rooms" className="TravelIcon"><BiHotel size={45}/></a>
                 <a href="https://www.guestreservations.com/holiday-inn-express-cambridge/booking" className="TravelIcon"><BsHouse size={45}/></a>
-                <a href="hyatt.com/en-US/hotel/maryland/hyatt-regency-chesapeake-bay-golf-resort-spa-and-marina/chesa/rooms" className="lastTravelIcon"><RiHotelFill size={45}/></a>
+                <a href="https://www.wyndhamhotels.com/days-inn/cambridge-maryland/days-inn-and-suites-cambridge/overview?iata=00093763&cid=PS:nkqknx2u2os8a94&gclid=CjwKCAjw4KyJBhAbEiwAaAQbE-5_XssAce-8DhfR6AmyAEQyOE6il8dgTS59z-mYJ-3mu4RljYie0xoCjlEQAvD_BwE&gclsrc=aw.ds" className="lastTravelIcon"><RiHotelFill size={45}/></a>
             </div>
         </div>
     )

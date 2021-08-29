@@ -8,8 +8,8 @@ function Venue() {
               href="https://www.hyatt.com/en-US/hotel/maryland/hyatt-regency-chesapeake-bay-golf-resort-spa-and-marina/chesa"
               target="_blank"
               rel="noopener noreferrer"
-            >chesapeake bay, md
-            </a> on april 23, 2022
+            >HYATT REGENCY CHESAPEAKE BAY
+            </a> APRIL 23, 2022
         </div>
     );
 }
