@@ -1,5 +1,5 @@
 import 'styles/Content.css';
-import photo from 'images/index_1.jpeg';
+import photo from 'images/luv-krishi.jpg';
 
 function LandingPage() {
     return (

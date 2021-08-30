@@ -35,6 +35,7 @@
   text-decoration: none;
   font-size: 2.5vh;
   padding-bottom: 2vh;
+  padding-top: 2.5vh;
 }
 
 .Faq-text {
@@ -54,4 +55,30 @@ h3 {
 
 p {
   font-family: 'open-sans';
+}
+
+.Faq-question {
+  margin-bottom: 1vh;
+}
+
+.Faq-answer {
+  margin-bottom: 5vh;
+}
+
+li {
+  font-family: 'open-sans';
+}
+
+a {
+  text-decoration: none;
+}
+
+
+li:hover {
+  color: #61dafb;
+}
+
+.Faq-title {
+  font-size: 3vh;
+  color: #F0C2D1;
 }
