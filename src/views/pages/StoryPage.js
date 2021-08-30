@@ -23,6 +23,7 @@ function StoryPage() {
     return (
         <div className="Story">
             <h1> a luv story </h1>
+            <h3> written by luv </h3>
                 <div className="story">
                     <img src={story1} className="Story-photo" alt="luv and krishi's story" />
                 </div>
@@ -61,7 +62,7 @@ function StoryPage() {
                     <img src={world1} className="Story-photo" alt="luv and krishi in vancouver" />
                     <img src={world2} className="Story-photo" alt="luv and krishi in chicago" />
                 </div>
-            <p>Gravity is Luv, and the only demand Luv has, is that we fall. And fall, we did. </p>
+            <p className="Gravity-text">Gravity is Luv, and the only demand Luv has, is that we fall. And fall, we did. </p>
                 <div className="gravity">
                     <img src={gravity1} className="Story-photo" alt="luv and krishi eating burgers" />
                     <img src={gravity2} className="Story-photo" alt="luv and krishi being crazy good looking" />
