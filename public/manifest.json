@@ -3,12 +3,12 @@
   "name": "Wedding Website",
   "icons": [
     {
-      "src": "robot.ico",
+      "src": "public/pink-transparent-robot.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "robot30475.png",
+      "src": "public/pink-transparent-robot.png",
       "type": "image/png",
       "sizes": "192x192"
     }
