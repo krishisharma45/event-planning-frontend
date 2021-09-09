@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'dreamland';
     src: url('fonts/dreamland/dreamland.eot');
@@ -23,9 +24,10 @@
     font-style: normal;
     font-display: swap;
 }
+*/
 
 .Footer {
-  font-family: 'open-sans';
+  font-family: 'OpenSans-Light';
   height: 10vh;
   background-color: #030E2A;
   display: flex;
