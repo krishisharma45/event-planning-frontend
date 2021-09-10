@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'dreamland';
     src: url('fonts/dreamland/dreamland.eot');
@@ -23,6 +24,7 @@
     font-style: normal;
     font-display: swap;
 }
+*/
 
 .Faq {
   background-color: #0D1735;
@@ -50,11 +52,11 @@ h1 {
 }
 
 h3 {
-  font-family: 'open-sans';
+  font-family: 'OpenSans-Light';
 }
 
 p {
-  font-family: 'open-sans';
+  font-family: 'OpenSans-Light';
 }
 
 .Faq-question {
@@ -66,7 +68,7 @@ p {
 }
 
 li {
-  font-family: 'open-sans';
+  font-family: 'OpenSans-Light';
 }
 
 a {
@@ -80,5 +82,5 @@ li:hover {
 
 .Faq-title {
   font-size: 3vh;
-  color: #F0C2D1;
+  color: #E88DAB;
 }

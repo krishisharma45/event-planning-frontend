@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'dreamland';
     src: url('fonts/dreamland/dreamland.eot');
@@ -10,9 +11,10 @@
     font-style: normal;
     font-display: swap;
 }
+*/
 
 .Travel {
-  height: 45vh;
+  min-height: 45vh;
   background-color: #0D1735;
   display: flex;
   flex-direction: column;
@@ -28,15 +30,15 @@
 }
 
 .Lodging-options {
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 5vh;
 }
 
 .Travel-options {
   flex-direction: row;
-  margin-bottom: 3vh;
+  margin-bottom: 2vh;
 }
-
 
 li {
   list-style-type: none;
@@ -52,6 +54,8 @@ a {
 
 .TravelIcon {
   padding-right: 10vw;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
@@ -61,3 +65,35 @@ h1 {
   color: #F0C2D1;
 }
 
+.Travel-text {
+  width: 75vw;
+  padding-bottom: 5vh;
+}
+
+
+.Lodging-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.Travel-description {
+  width: 33%;
+  font-size: 1.7vh;
+}
+
+.LodgingIcon {
+  align-items: center;
+  justify-content: center;
+}
+
+.Hotel-distance {
+  padding-top: 2vh;
+  font-weight: bold;
+  color: #E88DAB;
+}
+
+.Hotel-code {
+  color: #F0C2D1;
+}

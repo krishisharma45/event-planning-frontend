@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'dreamland';
     src: url('fonts/dreamland/dreamland.eot');
@@ -23,6 +24,7 @@
     font-style: normal;
     font-display: swap;
 }
+*/
 
 .Story {
   min-height: 45vh;
@@ -50,7 +52,7 @@ h1 {
 }
 
 h3 {
- font-family: 'open-sans';
+ font-family: 'OpenSans-Light';
  margin-top: 0vh;
  margin-bottom: 4vh;
 }
@@ -58,6 +60,7 @@ h3 {
 p {
   margin-top: 0.1vh;
   margin-bottom: 0.1vh;
+  font-family: 'OpenSans-Light';
 }
 
 .gravity {

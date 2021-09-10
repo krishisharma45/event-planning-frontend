@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'dreamland';
     src: url('fonts/dreamland/dreamland.eot');
@@ -23,6 +24,7 @@
     font-style: normal;
     font-display: swap;
 }
+*/
 
 .Event {
   background-color: #0D1735;
@@ -45,7 +47,7 @@ h1 {
 }
 
 p {
-  font-family: 'open-sans';
+  font-family: 'OpenSans-Light';
   margin-top: 0.1vh;
   margin-bottom: 0.1vh;
   font-style: bold;
