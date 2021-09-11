@@ -36,7 +36,8 @@
 }
 
 .Travel-options {
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 2vh;
 }
 

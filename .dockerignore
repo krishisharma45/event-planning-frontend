@@ -1,3 +1,14 @@
 node_modules/*
 docker-compose.yml
 Dockerfile
+bin/*
+.gitignore
+public/favicon.ico
+public/krishi-luv.jpeg
+public/logo192.png
+public/logo512.png
+public/robots.txt
+public/transparent-robot.png
+src/utils/reportWebVitals.js
+README.md
+src/images/logo.svg

@@ -54,7 +54,7 @@ function FaqPage() {
 
                 <a id="guests"><h1> guests </h1></a>
                 <h3 className="Faq-question"> are children allowed? </h3>
-                <p className="Faq-answer"> Absolutely! </p>
+                <p className="Faq-answer"> Everyone addressed on the envelope for the save the date is welcome to join! </p>
 
                 <h3 className="Faq-question"> what should I wear? </h3>
                 <p className="Faq-answer"> As this will be an Hindu/Jain ceremony, we recommend wearing Indian suits to the ceremony and reception! However, we want you to be comfortable, so feel free to wear what makes you happy. </p>
