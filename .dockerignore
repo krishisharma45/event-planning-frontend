@@ -12,3 +12,6 @@ public/transparent-robot.png
 src/utils/reportWebVitals.js
 README.md
 src/images/logo.svg
+.idea/
+.idea
+.git/
