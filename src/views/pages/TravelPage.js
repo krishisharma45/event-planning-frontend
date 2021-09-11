@@ -19,7 +19,7 @@ function TravelPage() {
                         <p className="Hotel-distance">Hot Wheels</p>
                         <p>DC: 1.5 hr</p>
                         <p>Philly: 2.25 hr</p>
-                        <p>Cleveland: 7.25 hr</p>
+                        <p>Cleveland: 7 hr</p>
                     </div>
                     <div className="Travel-description">
                         <a href="https://www.cheapoair.com/" className="LodgingIcon"><ImAirplane size={45}/></a>
@@ -31,8 +31,8 @@ function TravelPage() {
                     <div className="Travel-description">
                         <a href="https://www.greyhound.com/en-us/bus-to-baltimore" className="lastTravelIcon"><BiBus size={45}/></a>
                         <p className="Hotel-distance">Greyhound</p>
-                        <p>Cambridge: 2.2 mi</p>
-                        <p>Baltimore: 83.9 mi</p>
+                        <p>Venue: 2.2 mi</p>
+                        <p>BWI: 84 mi</p>
                         <p>DC: 86 mi</p>
                     </div>
                 </div>
