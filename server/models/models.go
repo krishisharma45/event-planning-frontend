@@ -17,6 +17,13 @@ func NewModels(db *sql.DB) Models {
 	}
 }
 
+type EventDetails struct {
+	FamilyName string `json:"family_name"`
+	Members    string `json:"members"`
+	EventName  string `json:"event_name"`
+	Venue      string `json:"venue"`
+}
+
 // Events is the type for events
 type Events struct {
 	ID        int       `json:"id"`
@@ -40,7 +47,7 @@ type FamilyEvents struct {
 	ID        int       `json:"id"`
 	FamilyID  int       `json:"family_id"`
 	EventID   int       `json:"event_id"`
-	attending int       `json:"attending"`
+	Attending int       `json:"attending"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
