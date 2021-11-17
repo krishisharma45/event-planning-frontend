@@ -17,6 +17,14 @@ func NewModels(db *sql.DB) Models {
 	}
 }
 
+type Auth struct {
+	FamilyName string    `json:"family_name"`
+	SecretID   int       `json:"secret_id"`
+	FamilyID   int       `json:"family_id"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
 type EventDetails struct {
 	FamilyName string `json:"family_name"`
 	Members    string `json:"members"`

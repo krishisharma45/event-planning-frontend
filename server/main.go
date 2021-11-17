@@ -19,14 +19,6 @@ type AppStatus struct {
 	Environment string `json:"environment"`
 }
 
-type config struct {
-	port int
-	env  string
-	db   struct {
-		dsn string
-	}
-}
-
 type application struct {
 	config config
 	logger *log.Logger
