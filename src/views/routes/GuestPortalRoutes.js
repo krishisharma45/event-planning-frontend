@@ -4,7 +4,7 @@ import EventPage from 'views/pages/EventPage';
 import StoryPage from 'views/pages/StoryPage';
 import FaqPage from 'views/pages/FaqPage';
 import TravelPage from 'views/pages/TravelPage';
-
+import RsvpPage from 'views/pages/RsvpPage';
 
 function GuestPortalRoutes() {
     return (
@@ -14,6 +14,7 @@ function GuestPortalRoutes() {
             <Route path={'/story'} component={StoryPage} />
             <Route path={'/faq'} component={FaqPage} />
             <Route path={'/travel'} component={TravelPage} />
+            <Route path={'/rsvp'} component={RsvpPage} />
         </Switch>
     )
 };
