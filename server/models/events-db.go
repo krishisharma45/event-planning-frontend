@@ -34,6 +34,24 @@ func (m *DBModel) GetFamilies(id int) (*Family, error) {
 	return &family, nil
 }
 
+//ValidateFamily will validate the family against DB
+func (m *DBModel) ValidateFamily(secretID int, familyName string) (*AuthResponse, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	var auth AuthResponse
+	//var familyExists int = -1
+	query := `select family_id from auth where auth.secret_id = $1 and auth.family_name = $2`
+	//err := m.DB.QueryRowContext(ctx, query, secretID, familyName).Scan(&familyExists)
+	err := m.DB.QueryRowContext(ctx, query, secretID, familyName).Scan(&auth.FamilyID)
+
+	if err != nil && err != sql.ErrNoRows {
+		return nil, err
+	}
+	auth.Exists = err != sql.ErrNoRows
+
+	return &auth, nil
+}
+
 //GetEventsForFamily will return events for a particular family
 func (m *DBModel) GetEventsForFamily(id int) (*[]EventDetails, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

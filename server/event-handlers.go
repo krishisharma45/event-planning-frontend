@@ -22,6 +22,7 @@ func (app *application) statusHandler(c *gin.Context) {
 //getOneFamily will get the family information for one family
 func (app *application) getOneFamily(c *gin.Context) {
 	id, err := strconv.Atoi(c.Params.ByName("id"))
+
 	if err != nil {
 		app.logger.Printf("Invalid id paramater")
 	}
@@ -35,6 +36,35 @@ func (app *application) getOneFamily(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"Content-Type": "application/json",
 		"message":      family,
+	})
+}
+
+//validateFamily will validate the family information for one family
+func (app *application) validateFamily(c *gin.Context) {
+	app.logger.Print("henlo")
+
+	secretCode, err := strconv.Atoi(c.Params.ByName("secret_code"))
+	if err != nil {
+		app.logger.Printf("Invalid secret-code paramater")
+	}
+
+	familyName := c.Params.ByName("family_name")
+	if err != nil {
+		app.logger.Printf("Invalid secret-code paramater")
+	}
+
+	app.logger.Printf("secret-code is: %d", secretCode)
+	app.logger.Printf("family-name is: %s", familyName)
+
+	resp, err := app.models.DB.ValidateFamily(secretCode, familyName)
+	if err != nil {
+		fmt.Printf("Unexpected error retrieving a family %v", err)
+	}
+
+	c.JSON(200, gin.H{
+		"Content-Type": "application/json",
+		"familyID":     resp.FamilyID,
+		"message":      resp.Exists,
 	})
 }
 

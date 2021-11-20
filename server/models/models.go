@@ -17,6 +17,11 @@ func NewModels(db *sql.DB) Models {
 	}
 }
 
+type AuthResponse struct {
+	Exists   bool `json:"exists"`
+	FamilyID int  `json:"family_id"`
+}
+
 type Auth struct {
 	FamilyName string    `json:"family_name"`
 	SecretID   int       `json:"secret_id"`
