@@ -5,3 +5,16 @@ services:
     ports:
       - 58000:3000
 
+  postgres:
+    image: postgres:10.5
+    environment:
+      - POSTGRES_USER=luvjain
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOSTNAME=localhost
+      - POSTGRES_PORT=8000
+      - POSTGRES_DB=event_planning
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+ #    - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql

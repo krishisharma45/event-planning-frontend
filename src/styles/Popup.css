@@ -1,0 +1,130 @@
+/* Popup style */
+.popup-box {
+  position: fixed;
+  background: #00000050;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  position: relative;
+  width: 70%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+}
+
+.close-icon {
+  content: 'x';
+  font-family: 'OpenSans-Light';
+  cursor: pointer;
+  position: fixed;
+  right: calc(15% - 30px);
+  top: calc(100vh - 85vh - 33px);
+  background: #ededed;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: 20px;
+}
+
+/* Popup style */
+.popup-box {
+  position: fixed;
+  background: #00000050;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  position: relative;
+  width: 70vw;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+}
+
+.close-icon {
+  content: 'x';
+  cursor: pointer;
+  position: fixed;
+  right: calc(15% - 30px);
+  top: calc(100vh - 85vh - 33px);
+  background: #ededed;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: 20px;
+}
+
+.Popup-title {
+  font-family: 'dreamland';
+  font-size: 3em;
+  color: #030E2A;
+  padding-bottom: 1em;
+  margin-top: 0.5em;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  font-family: 'OpenSans-Light';
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  margin-right: 2em;
+  color: #030E2A;
+}
+
+input {
+  font-family: 'OpenSans-Light';
+  font-size: 1.2em;
+  color: #030E2A;
+  width: 50%;
+  margin-left: 1em;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+}
+
+.Popup-button {
+  font-family: 'OpenSans-Light';
+  font-size: 1em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding-bottom: 0.7em;
+  padding-top: 0.7em;
+  padding-right: 0.9em;
+  padding-left: 0.9em;
+  background-color: #E88DAB;
+  border: none;
+  border-radius: 0.2em;
+  box-shadow: -0.2em 0.2em 0.5em #030E2A;
+  color: #030E2A;
+  font-weight: bold;
+}
+
+.box {
+  background: #F0C2D1;
+}
