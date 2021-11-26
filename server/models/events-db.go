@@ -53,13 +53,13 @@ func (m *DBModel) ValidateFamily(secretID int, familyName string) (*AuthResponse
 }
 
 //GetEventsForFamily will return events for a particular family
-func (m *DBModel) GetEventsForFamily(id int) (*[]EventDetails, error) {
+func (m *DBModel) GetEventsForFamily(family_id int) (*[]EventDetails, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	//query := `select event_id, attending, created_at, updated_at from family_events fe where fe.family_id = $1`
-	secondQuery := `select family_name, members, event_name, venue from family_events fe left join events e on e.id = fe.event_id left join family f on f.id = fe.family_id where family_id = $1`
-	rows, err := m.DB.QueryContext(ctx, secondQuery, id)
+	secondQuery := `select family_name, members, event_name, venue, event_id from family_events fe left join events e on e.id = fe.event_id left join family f on f.id = fe.family_id where family_id = $1`
+	rows, err := m.DB.QueryContext(ctx, secondQuery, family_id)
 	defer rows.Close()
 	if err != nil {
 		fmt.Print(err)
@@ -74,6 +74,7 @@ func (m *DBModel) GetEventsForFamily(id int) (*[]EventDetails, error) {
 			&eventDetail.Members,
 			&eventDetail.EventName,
 			&eventDetail.Venue,
+			&eventDetail.EventID,
 		)
 		if err != nil {
 			return &[]EventDetails{}, err
@@ -86,6 +87,27 @@ func (m *DBModel) GetEventsForFamily(id int) (*[]EventDetails, error) {
 		return nil, err
 	}
 	return &eventDetails, nil
+}
+
+//GetAttendingForEvent will return number of people attending for a particular event
+func (m *DBModel) GetAttendingForEvent(id int) (int64, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	//query := `select event_id, attending, created_at, updated_at from family_events fe where fe.family_id = $1`
+	query := `select sum (attending) from family_events where event_id = $1`
+	rows, err := m.DB.QueryContext(ctx, query, id)
+	defer rows.Close()
+	if err != nil {
+		fmt.Print(err)
+		return 0, err
+	}
+
+	var totalAttending int64
+	for rows.Next() {
+		rows.Scan(&totalAttending)
+	}
+	return totalAttending, nil
 }
 
 //RsvpToEvent will rsvp a family to an event with a number attending
