@@ -27,9 +27,9 @@ type application struct {
 
 func main() {
 	var cfg config
-	flag.IntVar(&cfg.port, "port", 8000, "Server port to listen on")
+	flag.IntVar(&cfg.port, "port", 8080, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Application environment")
-	flag.StringVar(&cfg.db.dsn, "dsn", "postgres://luvjain@localhost/event_planning?sslmode=disable", "Postgres connection string")
+	flag.StringVar(&cfg.db.dsn, "dsn", "postgresql://luvjain:postgres@localhost:5432/event_planning?sslmode=disable", "Postgres connection string")
 	flag.Parse()
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
