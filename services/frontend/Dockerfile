@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM node:12-slim
 
 WORKDIR /workspace
@@ -6,7 +8,7 @@ COPY package*.json .
 
 RUN npm install
 
-COPY . .
+COPY src/* .
 
 EXPOSE 3000
 
