@@ -9,7 +9,8 @@ function Navigation() {
                 <Link to="/events" className="Nav-events">events</Link>
                 <Link to="/story" className="Nav-story">story</Link>
                 <Link to="/faq" className="Nav-faq">faq</Link>
-                <Link to="/travel" className="Nav-travel">travel</Link>
+                <Link to="/travel" className="Nav-faq">travel</Link>
+                <Link to="/rsvp" className="Nav-travel">rsvp</Link>
             </Router>
         </div>
     );

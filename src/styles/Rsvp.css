@@ -1,0 +1,48 @@
+.Rsvp-page {
+  background-color: #0D1735;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5vh;
+    text-decoration: none;
+    font-size: 2.5vh;
+    height: 46vh;
+}
+
+.Rsvp-intro {
+  font-family: 'OpenSans-Light';
+  font-weight: normal;
+  font-size: 1em;
+  padding-bottom: 3vh;
+  padding-right: 13vw;
+  padding-left: 13vw;
+}
+
+.Rsvp-word {
+  color: #E88DAB;
+  font-weight: bold;
+}
+
+.Rsvp-info {
+  font-size: 0.8em;
+  padding-bottom: 5vh;
+  padding-right: 13vw;
+  padding-left: 13vw;
+}
+
+.Rsvp-button {
+  font-family: 'dreamland';
+  font-weight: normal;
+  font-size: 2em;
+  border: none;
+  background-color: #E88DAB;
+  color: #0D1735;
+  padding-bottom: 0.3em;
+  padding-top: 0.3em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+  border-radius: 0.1em;
+  box-shadow: -0.2em 0.2em 0.2em #000000;
+}

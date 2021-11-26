@@ -60,7 +60,7 @@ function TravelPage() {
                         <p className="Hotel-distance">Days Inn</p>
                         <p>2.6 mi</p>
                         <p>$200/night</p>
-                        <p className="Hotel-code">[COMING SOON]</p></a>
+                        <p className="Hotel-code">[TBD]</p></a>
                     </div>
                 </div>
             </div>

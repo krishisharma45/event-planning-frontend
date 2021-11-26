@@ -46,6 +46,15 @@ h1 {
   font-size: 6vh;
 }
 
+.First-event {
+  font-family: 'dreamland';
+  font-weight: normal;
+  font-style: normal;
+  color: #F0C2D1;
+  font-size: 6vh;
+  margin-top: 0.5vh;
+}
+
 p {
   font-family: 'OpenSans-Light';
   margin-top: 0.1vh;
@@ -61,4 +70,16 @@ h5 {
   font-family: 'open-sans';
   margin-top: 0.1vh;
   margin-bottom: 0.1vh;
+}
+
+.Event-date {
+  margin-top: 6vh;
+  padding-bottom: 1vh;
+  font-weight: light;
+  font-size: 4vh;
+  color: #E88DAB;
+}
+
+.Last-event-info {
+  margin-bottom: 2.5vh;
 }
