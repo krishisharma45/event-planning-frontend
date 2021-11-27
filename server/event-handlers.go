@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/pascaldekloe/jwt"
 )
 
 var (
@@ -13,6 +15,7 @@ var (
 	httpServerError            = 500
 	ErrTemplateGetFamilyEvents = "SQL failure while retrieving events for family. Family id is: %s"
 	ErrTemplateAttendingCount  = "SQL failure while retrieving number attending. Event id is %s"
+	ErrTemplateRSVPClient      = "Invalid operation! User tried to enter in attending number more than family members %s"
 )
 
 func (app *application) statusHandler(c *gin.Context) {
@@ -29,14 +32,14 @@ func (app *application) statusHandler(c *gin.Context) {
 
 //getOneFamily will get the family information for one family
 func (app *application) getOneFamily(c *gin.Context) {
-	id, err := strconv.Atoi(c.Params.ByName("id"))
+	familyID, err := strconv.Atoi(c.Params.ByName("family_id"))
 
 	if err != nil {
-		app.logger.Printf("Invalid id paramater")
+		app.logger.Printf("Invalid family_id paramater")
 	}
-	app.logger.Printf("Id is: %d", id)
+	app.logger.Printf("Id is: %d", familyID)
 
-	family, err := app.models.DB.GetFamilies(id)
+	family, err := app.models.DB.GetFamilies(familyID)
 	if err != nil {
 		fmt.Printf("Unexpected error retrieving a family %v", err)
 	}
@@ -64,17 +67,6 @@ func (app *application) validateFamily(c *gin.Context) {
 	app.logger.Printf("secret-code is: %d", secretCode)
 	app.logger.Printf("family-name is: %s", familyName)
 
-	//TODO: jwt
-	// var claims jwt.Claims
-	// claims.Subject = fmt.Sprint(familyName)
-	// claims.Issued = jwt.NewNumericTime(time.Now())
-	// claims.NotBefore = jwt.NewNumericTime(time.Now())
-	// claims.Expires = jwt.NewNumericTime(time.Now().Add(24 * time.Hour))
-	// claims.Issuer = "luvandkrishi.com"
-	// claims.Audiences = []string{"luvandkrishi.com"}
-
-	// jwtBytes, err := claims.HMACSign(jwt.HS256, []byte(app.config.jwt.secret))
-
 	resp, err := app.models.DB.ValidateFamily(secretCode, familyName)
 	if err != nil {
 		app.logger.Printf("Unexpected error retrieving a family %v", err)
@@ -82,6 +74,27 @@ func (app *application) validateFamily(c *gin.Context) {
 			"message": err.Error(),
 		})
 	}
+
+	var claims jwt.Claims
+	claims.Subject = fmt.Sprint(familyName)
+	claims.Issued = jwt.NewNumericTime(time.Now())
+	claims.NotBefore = jwt.NewNumericTime(time.Now())
+	claims.Expires = jwt.NewNumericTime(time.Now().Add(24 * time.Hour))
+	claims.Issuer = "luvandkrishi.com"
+	claims.Audiences = []string{"luvandkrishi.com"}
+
+	jwtBytes, err := claims.HMACSign(jwt.HS256, []byte(app.config.jwt.secret))
+	if err != nil {
+		app.logger.Printf("Error signing request %v", err)
+		c.JSON(httpServerError, gin.H{
+			"message": "Error signing request",
+		})
+	}
+
+	c.JSON(httpSuccess, gin.H{
+		"Content-Type": "application/json",
+		"response":     jwtBytes,
+	})
 
 	c.JSON(httpSuccess, gin.H{
 		"Content-Type": "application/json",
@@ -189,6 +202,12 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 			"error":   err.Error(),
 		})
 	}
+
+	//check attending vs number of members
+	// family, err := app.models.DB.GetFamilies(familyID)
+	// if attending > family.Members {
+
+	// }
 
 	app.logger.Printf("Family %d will have %d people attending %d event id", familyID, attending, eventID)
 

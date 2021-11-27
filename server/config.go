@@ -4,6 +4,9 @@ type config struct {
 	port int
 	env  string
 	db   database
+	jwt  struct {
+		secret string
+	}
 }
 
 type database struct {

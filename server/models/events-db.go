@@ -153,7 +153,3 @@ func (m *DBModel) GetEvents(id int) (*Events, error) {
 
 	return &event, nil
 }
-
-func (m *DBModel) All(id int) ([]*Movie, error) {
-	return nil, nil
-}
