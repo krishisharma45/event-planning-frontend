@@ -1,5 +1,5 @@
-sh ./bin/aws_login.sh
-sh ./bin/docker_build.sh
-sh ./bin/tag_image.sh
-sh ./bin/push_image.sh
+sh ./bin/login.sh
+docker build -t luvandkrishi .
+sh ./bin/tag.sh
+sh ./bin/push.sh
 echo 'pushed new version of image to ECR'
