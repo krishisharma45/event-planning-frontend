@@ -2,23 +2,27 @@ version: "3"
 
 services:
   ui:
-    image: ep/frontend
+    container_name: ui
+    image: ui
     build:
       context: .
-      dockerfile: ./services/frontend/Dockerfile
+      dockerfile: ./services/ui/Dockerfile
     ports:
       - '58000:3000'
 
   api:
-    image: ep/backend
+    container_name: api
+    image: api
     build:
       context: .
-      dockerfile: ./services/backend/Dockerfile
+      dockerfile: ./services/api/Dockerfile
     ports:
       - '59000:8080'
     depends_on:
-      - database
-  database:
+      - db
+
+  db:
+    container_name: database
     image: postgres:10.5
     environment:
       - POSTGRES_USER
@@ -30,4 +34,4 @@ services:
       - '5432:5432'
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
- #    - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./server/go_events.sql:/docker-entrypoint-event_planning.d/server/go_events.sql

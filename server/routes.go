@@ -17,7 +17,7 @@ func (app *application) routes() *gin.Engine {
 		c.JSON(400, gin.H{"code": "PAGE_NOT_FOUND", "message": "Hmm, hi friend. I think you're trying to access something not available :)"})
 	})
 
-	r.Run("localhost:8080")
+	r.Run("0.0.0.0:8080")
 
 	return r
 }
