@@ -3,11 +3,13 @@ import 'styles/Invitation.css';
 function InvitationPage() {
   const accept = () => {
     alert('Accept');
+    // if a user accepts, then ask for total guests
   }
 
   const decline = () => {
     alert('Decline');
   }
+
   return (
     // create page for
     <div className="invitation">
