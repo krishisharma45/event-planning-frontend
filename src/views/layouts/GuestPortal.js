@@ -4,17 +4,20 @@ import Venue from 'components/Venue';
 import Navigation from 'components/Navigation';
 import Footer from 'components/Footer';
 import GuestPortalRoutes from 'views/routes/GuestPortalRoutes';
+import { Component } from 'react';
 
-function GuestPortal() {
-  return (
-    <div className="App">
-        <Header />
-        <Venue />
-        <Navigation />
-        <GuestPortalRoutes />
-        <Footer />
-    </div>
-  );
+class GuestPortal extends Component {
+  render() {
+    return (
+      <div className="App">
+          <Header />
+          <Venue />
+          <Navigation />
+          <GuestPortalRoutes />
+          <Footer />
+      </div>
+    );
+  }
 };
 
 export default GuestPortal;

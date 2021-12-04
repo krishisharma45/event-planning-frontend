@@ -1,6 +1,6 @@
 import 'styles/Popup.css';
 
-const Popup = props => {
+export default function Popup(props) {
   return (
     <div className="popup-box">
       <div className="box">
@@ -10,5 +10,3 @@ const Popup = props => {
     </div>
   );
 };
-
-export default Popup;

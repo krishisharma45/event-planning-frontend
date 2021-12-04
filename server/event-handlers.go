@@ -3,19 +3,22 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"time"
+	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pascaldekloe/jwt"
 )
 
 var (
-	httpSuccess                = 200
-	httpClientError            = 400
-	httpServerError            = 500
-	ErrTemplateGetFamilyEvents = "SQL failure while retrieving events for family. Family id is: %s"
-	ErrTemplateAttendingCount  = "SQL failure while retrieving number attending. Event id is %s"
-	ErrTemplateRSVPClient      = "Invalid operation! User tried to enter in attending number more than family members %s"
+	secret_code                  = "secret_code"
+	family_name                  = "family_name"
+	httpSuccess                  = 200
+	httpClientError              = 400
+	httpServerError              = 500
+	ErrTemplateGetFamilyEvents   = "SQL failure while retrieving events for family. Family id is: %s"
+	ErrTemplateAttendingCount    = "SQL failure while retrieving number attending. Event id is %s"
+	ErrTemplateRSVPClient        = "Invalid operation! User tried to enter in attending number more than family members %s"
+	ErrTemplateInvalidSecretCode = "Invalid Inputs - Secret Code for Validation"
+	ErrTemplateInvalidFamilyName = "Invalid Inputs - Family Name for Validation"
 )
 
 func (app *application) statusHandler(c *gin.Context) {
@@ -54,14 +57,18 @@ func (app *application) getOneFamily(c *gin.Context) {
 func (app *application) validateFamily(c *gin.Context) {
 	app.logger.Print("henlo")
 
-	secretCode, err := strconv.Atoi(c.Params.ByName("secret_code"))
+	secretCode, err := strconv.Atoi(c.Params.ByName(secret_code))
 	if err != nil {
-		app.logger.Printf("Invalid secret-code paramater")
+		c.JSON(httpClientError, gin.H{
+			"message": ErrTemplateInvalidSecretCode,
+		})
 	}
 
-	familyName := c.Params.ByName("family_name")
+	familyName := strings.Title(strings.ToLower(c.Params.ByName(family_name)))
 	if err != nil {
-		app.logger.Printf("Invalid secret-code paramater")
+		c.JSON(httpClientError, gin.H{
+			"message": ErrTemplateInvalidFamilyName,
+		})
 	}
 
 	app.logger.Printf("secret-code is: %d", secretCode)
@@ -75,31 +82,31 @@ func (app *application) validateFamily(c *gin.Context) {
 		})
 	}
 
-	var claims jwt.Claims
-	claims.Subject = fmt.Sprint(familyName)
-	claims.Issued = jwt.NewNumericTime(time.Now())
-	claims.NotBefore = jwt.NewNumericTime(time.Now())
-	claims.Expires = jwt.NewNumericTime(time.Now().Add(24 * time.Hour))
-	claims.Issuer = "luvandkrishi.com"
-	claims.Audiences = []string{"luvandkrishi.com"}
+	// var claims jwt.Claims
+	// claims.Subject = fmt.Sprint(familyName)
+	// claims.Issued = jwt.NewNumericTime(time.Now())
+	// claims.NotBefore = jwt.NewNumericTime(time.Now())
+	// claims.Expires = jwt.NewNumericTime(time.Now().Add(24 * time.Hour))
+	// claims.Issuer = "luvandkrishi.com"
+	// claims.Audiences = []string{"luvandkrishi.com"}
 
-	jwtBytes, err := claims.HMACSign(jwt.HS256, []byte(app.config.jwt.secret))
-	if err != nil {
-		app.logger.Printf("Error signing request %v", err)
-		c.JSON(httpServerError, gin.H{
-			"message": "Error signing request",
-		})
-	}
+	//jwtBytes, err := claims.HMACSign(jwt.HS256, []byte(app.config.jwt.secret))
+	// if err != nil {
+	// 	app.logger.Printf("Error signing request %v", err)
+	// 	c.JSON(httpServerError, gin.H{
+	// 		"message": "Error signing request",
+	// 	})
+	// }
 
-	c.JSON(httpSuccess, gin.H{
-		"Content-Type": "application/json",
-		"response":     jwtBytes,
-	})
+	// c.JSON(httpSuccess, gin.H{
+	// 	"Content-Type": "application/json",
+	// 	"response":     jwtBytes,
+	// })
 
 	c.JSON(httpSuccess, gin.H{
 		"Content-Type": "application/json",
 		"familyID":     resp.FamilyID,
-		"message":      resp.Exists,
+		"exists":       resp.Exists,
 	})
 }
 
