@@ -1,8 +1,8 @@
 import 'styles/Rsvp.css';
 import 'styles/Popup.css';
-import React, { Component, useState } from 'react';
+import React, {useState } from 'react';
 import Popup from 'components/Popup';
-import InvitationPage from 'views/pages/InvitationPage';
+//import InvitationPage from 'views/pages/InvitationPage';
 import { useHistory } from "react-router-dom";
 
 
@@ -27,17 +27,13 @@ function RsvpPage() {
 
     const popupSubmit = (e) => {
         e.preventDefault();
-        alert('it works!');
-        alert(familyName)
-        alert(secretCode)
         if (familyName === "") {
-          errors.push("family_name");
+          errors.push("Hi! Seems you haven't entered in a family name, please check your instructions for this information & try again");
         }
 
         if (secretCode === "") {
-          errors.push("secret_code");
+          errors.push("Hi! Seems you haven't entered in a secret code, please check your instructions for this information & try again");
         }
-
         setErrors(errors)
 
         if (errors.length > 0) {
@@ -57,29 +53,33 @@ function RsvpPage() {
         //alert(requestOptions)
         fetch("http://localhost:59000/v1/validate/" + secretCode + "/" + familyName)
         .then((response) => {
-          if (response.status !== 200) {}
-          alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!")
+          if (response.status !== 200 && response.status !== 400) {
+            alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!")
+          }
           return response.json();
         })
         .then((data) => {
-          if (data.error) {
-            alert("login failed");
-            alert("error", data.error);
+          if (data.error === `Invalid Inputs - Secret Code for Validation`) {
+            alert("Hi! It seems like you're trying to put in something that doesn't make sense for the secret code. Please check your instructions for this information & try again ");
+
+          } else if (data.error === `Invalid Inputs - Family Name for Validation`) {
+            alert("Hi! It seems like you're trying to put in something that doesn't make sense for the secret code. Please check your instructions for this information & try again ");
+
+          } else if (data.valid === false) {
+            alert("Oops, your code and family name don't seem to match up. Please check your instructions for this information & try again");
               //setAlert({type: "alert-danger", message: "Invalid login" });
           } else {
-            alert("Logging in");
+            alert("Success! Logging in");
+            setValidated(true)
+            // return validated ===
               // handleJWTChange(Object.values(data)[0]);
               // window.localStorage.setItem("jwt", JSON.stringify(Object.values(data)[0]));
             history.push("/invitation");
           }
       })
-      .catch(error => alert('Error! ' + error.message))
-
-        //history.push("/invitation");
-        //fetch api_url/5432
-        //if the last name + guest code are in the database, then
-        //use react router to go to new component
-        //else, return alert saying "last name + guest code not found"
+      .catch(error => 
+        alert('Error! ' + error)
+        )
     }
 
     return (

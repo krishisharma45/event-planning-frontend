@@ -3,6 +3,7 @@ module event-planning
 go 1.15
 
 require (
+	github.com/gin-contrib/cors v1.3.1 // indirect
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/godoctor/godoctor v0.0.0-20211103152449-96567efaee44

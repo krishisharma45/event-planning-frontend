@@ -1,16 +1,24 @@
 package main
 
 import (
-	"net/http"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func (app *application) enableCORS(next *gin.Engine) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		next.ServeHTTP(w, r)
+//enableCors is what allows us to accept traffic from the outside world
+//This should be where we allow access from different places/add headers/keys
+func (app *application) enableCORS(next *gin.Engine) gin.HandlerFunc {
+	return cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:58000"},
+		AllowMethods:     []string{"PUT", "GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://luvandkrishi.com"
+		},
+		MaxAge: 12 * time.Hour,
 	})
 }
-
-//TODO:Middleware
