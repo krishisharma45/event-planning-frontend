@@ -16,7 +16,7 @@ function GuestPortalRoutes() {
             <Route path={'/faq'} component={FaqPage} />
             <Route path={'/travel'} component={TravelPage} />
             <Route path={'/rsvp'} component={RsvpPage} />
-            <Route path={'/invitation'} component={InvitationPage} />
+            {/* <Route path={'/invitation'} component={InvitationPage} /> */}
         </Switch>
     )
 };
