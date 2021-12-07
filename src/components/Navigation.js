@@ -1,8 +1,7 @@
 import 'styles/Navigation.css';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 import refreshPage from 'utils/refreshPage';
-import React, { Component } from 'react'
-import RsvpPage from 'views/pages/RsvpPage';
+import React from 'react'
 
 // export default class Navigation extends Component {
    

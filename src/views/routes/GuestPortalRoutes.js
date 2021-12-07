@@ -5,7 +5,6 @@ import StoryPage from 'views/pages/StoryPage';
 import FaqPage from 'views/pages/FaqPage';
 import TravelPage from 'views/pages/TravelPage';
 import RsvpPage from 'views/pages/RsvpPage';
-import InvitationPage from 'views/pages/InvitationPage';
 
 function GuestPortalRoutes() {
     return (

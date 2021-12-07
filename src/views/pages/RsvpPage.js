@@ -3,7 +3,6 @@ import 'styles/Popup.css';
 import React, {useState } from 'react';
 import Popup from 'components/Popup';
 //import InvitationPage from 'views/pages/InvitationPage';
-import { useHistory } from "react-router-dom";
 import InvitationPage from './InvitationPage';
 
 

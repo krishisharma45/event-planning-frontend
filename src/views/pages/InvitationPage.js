@@ -40,7 +40,7 @@ const InvitationPage = (props) => {
     if (!mydata && props.familyID) {
       loadEvents()
     }
-  }, []);
+  }, [mydata, props.familyID]);
   
   
 
