@@ -22,6 +22,8 @@ services:
       - .:/workspace
     ports:
       - '59000:8080'
+    volumes:
+      - .:/workspace
     depends_on:
       - db
 

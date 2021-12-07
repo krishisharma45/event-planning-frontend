@@ -30,6 +30,7 @@ func main() {
 	flag.IntVar(&cfg.port, "port", 8080, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Application environment")
 	flag.StringVar(&cfg.db.dsn, "dsn", "postgresql://luvjain:postgres@database/event_planning?sslmode=disable", "Postgres connection string")
+	flag.StringVar(&cfg.jwt.secret, "jwt-secret", "2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160", "secret")
 	flag.Parse()
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
