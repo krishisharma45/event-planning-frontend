@@ -16,7 +16,7 @@ function RsvpPage(props) {
 
     // }
     const [familyName, setFamilyName] = useState("")
-    const [familyIDN, setFamilyIDN] = useState(0)
+    const [familyID, setFamilyIDN] = useState(0)
     const [secretCode, setSecretCode] = useState(0)
     const [errors, setErrors] = useState([])
     const [validated, setValidated] = useState(false)
@@ -74,6 +74,7 @@ function RsvpPage(props) {
             alert("Success! Logging in");
 
             setValidated(true)
+            console.log(data.familyID)
             setFamilyIDN(data.familyID)
             togglePopup()
             // save state to data.familyID
@@ -93,8 +94,8 @@ function RsvpPage(props) {
           
           <div className="invitation-container">
             {
-            validated ?
-            <InvitationPage familyID={familyIDN}/> :
+            validated && familyID ?
+            <InvitationPage familyID={familyID}/> :
             <>
               <div className="Rsvp-page">
                 <p className="Rsvp-intro">Welcome to the <span className="Rsvp-word">RSVP</span> portal!</p>
