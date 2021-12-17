@@ -26,6 +26,7 @@ const InvitationPage = (props) => {
         } else {
           console.log(data)
           console.log(data.message)
+          console.log(data.message.length)
           // save state to data.familyID
           // return validated ===
             // handleJWTChange(Object.values(data)[0]);

@@ -58,7 +58,7 @@ func (m *DBModel) GetEventsForFamily(family_id int) (*[]EventDetails, error) {
 	defer cancel()
 
 	//query := `select event_id, attending, created_at, updated_at from family_events fe where fe.family_id = $1`
-	secondQuery := `select family_name, members, event_name, venue, event_id from family_events fe left join events e on e.id = fe.event_id left join family f on f.id = fe.family_id where family_id = $1`
+	secondQuery := `select family_id, family_name, members, event_name, venue, event_id, attending from family_events fe left join events e on e.id = fe.event_id left join family f on f.id = fe.family_id where family_id = $1`
 	rows, err := m.DB.QueryContext(ctx, secondQuery, family_id)
 	defer rows.Close()
 	if err != nil {
@@ -70,11 +70,13 @@ func (m *DBModel) GetEventsForFamily(family_id int) (*[]EventDetails, error) {
 	for rows.Next() {
 		var eventDetail EventDetails
 		err = rows.Scan(
+			&eventDetail.FamilyID,
 			&eventDetail.FamilyName,
 			&eventDetail.Members,
 			&eventDetail.EventName,
 			&eventDetail.Venue,
 			&eventDetail.EventID,
+			&eventDetail.Attending,
 		)
 		if err != nil {
 			return &[]EventDetails{}, err
@@ -153,3 +155,27 @@ func (m *DBModel) GetEvents(id int) (*Events, error) {
 
 	return &event, nil
 }
+
+// //Addfamily will add a particular family
+// func (m *DBModel) GetEvents(id int) (*Events, error) {
+// 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+// 	defer cancel()
+
+// 	query := `select id, event_name, venue, created_at, updated_at from event where id = $1`
+// 	row := m.DB.QueryRowContext(ctx, query, id)
+
+// 	var event Events
+
+// 	err := row.Scan(
+// 		&event.ID,
+// 		&event.EventName,
+// 		&event.Venue,
+// 		&event.CreatedAt,
+// 		&event.UpdatedAt,
+// 	)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &event, nil
+// }

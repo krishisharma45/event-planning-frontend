@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +16,7 @@ var (
 	httpServerError              = 500
 	ErrTemplateGetFamily         = "Unexpected error retrieving a family"
 	ErrTemplateGetFamilyEvents   = "SQL failure while retrieving events for family. Family id is: %s"
+	ErrTemplateAddFamily         = "SQL failure while adding family. Family name is: %s"
 	ErrTemplateAttendingCount    = "SQL failure while retrieving number attending. Event id is %s"
 	ErrTemplateRSVPClient        = "Invalid operation! User tried to enter in attending number more than family members %s"
 	ErrTemplateInvalidSecretCode = "Invalid Inputs - Secret Code for Validation"
@@ -240,7 +240,7 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 		})
 	}
 	//TODO: luv add validation
-	attending, err := strconv.Atoi(c.Params.ByName("attending"))
+	attending, err := validateAttending(c.Params.ByName("attending"))
 	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
@@ -275,3 +275,41 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 		"message":      true,
 	})
 }
+
+// func (app *application) addFamily(c *gin.Context) {
+// 	familyName, err := validateFamilyName(c.Params.ByName("family_name"))
+// 	if err != nil {
+// 		c.JSON(httpClientError, gin.H{
+// 			"Content-Type": "application/json",
+// 			"message":      "Invalid family name",
+// 			"error":        err.Error(),
+// 		})
+// 		return
+// 	}
+// 	attending, err := validateAttending(c.Params.ByName("attending"))
+// 	if err != nil {
+// 		c.JSON(httpClientError, gin.H{
+// 			"Content-Type": "application/json",
+// 			"message":      "Invalid number of attending",
+// 			"error":        err.Error(),
+// 		})
+// 	}
+
+// 	_, err = app.models.DB.RsvpToEvent(familyID, eventID, attending)
+
+// 	if err != nil {
+// 		app.logger.Printf("Something went wrong with sql query to add family %s", err)
+// 		app.logger.Printf("Family name is %s \n", familyName)
+// 		app.logger.Printf("Number attending in family is %v \n", attending)
+
+// 		c.JSON(httpServerError, gin.H{
+// 			"Content-Type": "application/json",
+// 			"message":      fmt.Sprintf(ErrTemplateAddFamily, familyName),
+// 		})
+// 	}
+
+// 	c.JSON(httpSuccess, gin.H{
+// 		"Content-Type": "application/json",
+// 		"message":      true,
+// 	})
+// }

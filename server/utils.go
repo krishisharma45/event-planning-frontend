@@ -34,3 +34,12 @@ func validateFamilyName(familyName string) (string, error) {
 
 	return validatedFamilyName, nil
 }
+
+func validateAttending(attending string) (int, error) {
+	numAttending, err := strconv.Atoi(attending)
+	if numAttending <= 0 {
+		return 0, err
+	}
+
+	return numAttending, nil
+}

@@ -32,11 +32,13 @@ type Auth struct {
 
 // EventDetails is the response for how events attributed to a family
 type EventDetails struct {
+	FamilyID   int    `json:"family_id"`
 	FamilyName string `json:"family_name"`
 	Members    string `json:"members"`
 	EventName  string `json:"event_name"`
 	Venue      string `json:"venue"`
 	EventID    int    `json:"event_id"`
+	Attending  int    `json:"attending"`
 }
 
 // Events is the type for events
