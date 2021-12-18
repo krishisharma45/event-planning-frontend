@@ -3,7 +3,7 @@ import 'styles/Popup.css';
 import React, {useState } from 'react';
 import Popup from 'components/Popup';
 //import InvitationPage from 'views/pages/InvitationPage';
-import InvitationPage from './InvitationPage';
+import Invitation from 'components/Invitation';
 
 
 function RsvpPage(props) {
@@ -94,7 +94,7 @@ function RsvpPage(props) {
           <div className="invitation-container">
             {
             validated && familyID ?
-            <InvitationPage familyID={familyID}/> :
+            <Invitation familyID={familyID}/> :
             <>
               <div className="Rsvp-page">
                 <p className="Rsvp-intro">Welcome to the <span className="Rsvp-word">RSVP</span> portal!</p>
