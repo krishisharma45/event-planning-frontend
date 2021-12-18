@@ -21,18 +21,10 @@ func (app *application) routes() *gin.Engine {
 	r.GET("/v1/family/:family_id", app.getOneFamily)
 	r.GET("/v1/validate/:secret_code/:family_name", app.validateFamily)
 	r.GET("/v1/event/:id", app.getOneEvent)
-<<<<<<< Updated upstream
 	r.GET("/v1/family/events/:family_id", app.getEventsForFamily)
-=======
-	r.GET("/v1/family/events/:id", app.getEventsForFamily)
-
->>>>>>> Stashed changes
 	r.PUT("/v1/family/events/:family_id/:event_id/:attending", app.rsvpToEvent)
 	// back end querying urls
-	r.GET("/v1/count/events/:event_id", app.getAttendingForEvent)
 	// r.PUT("/v1/family/:family_name/:members", app.addFamily)
-
-	// back end querying urls
 	r.GET("/v1/count/events/:event_id", app.getAttendingForEvent)
 
 	r.NoRoute(func(c *gin.Context) {
