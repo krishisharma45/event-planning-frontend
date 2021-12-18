@@ -81,14 +81,34 @@ const Invitation = (props) => {
       //  attending: int}
   }
 
-      const popupSubmit = (e) => {
-          e.preventDefault();
-          // on submit, render a simple message to the user saying
-          // "Thank you for your response, {family_name}! We look forward to seeing you" if the family accepts any event
-          // and render
-          // "Thank you for your response, {family_name}! We'll miss you" if the family declines all events
-          // then, re-render the login page of RSVP once they click out of the popup
+  const popupSubmit = (e) => {
+      e.preventDefault();
+      // on submit, render a simple message to the user saying
+      // "Thank you for your response, {family_name}! We look forward to seeing you" if the family accepts any event
+      // and render
+      // "Thank you for your response, {family_name}! We'll miss you" if the family declines all events
+      // then, re-render the login page of RSVP once they click out of the popup
+  }
+
+  const submitForm = async () => {
+      try{
+        //const response = await fetch("http://localhost:59000/v1/family/events/:family_id/:event_id/:attending" + props.familyID + props.event_id + props.attending);
+        const response = await fetch("http://localhost:59000/v1/family/events/" + props.family_id + "/" + props.event_id + "/" + attending);
+        const data = await response.json();
+        setMyData(data);
+        if (response.status !== 200 && response.status !== 400) {
+          alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!")
+        }
+        if (data.error === `Invalid family id`) {
+          alert("Hi! It seems like you're trying to put in something that doesn't make sense for the family ID. Please email luvandkrishi.com!");
+
+        } else {
+          alert("Thank you for submitting your response!")
+        }
+      } catch (error){
+        console.log(error);
       }
+  }
 
   const events = [];
 
@@ -118,7 +138,7 @@ const Invitation = (props) => {
            <h1 className="invitation-header">invitation details</h1>
 
            <p className="invitation-info">Dear {mydata.message[0].family_name} family, We humbly request your presence to the following events. Please email us at luvandkrishi@gmail.com with any questions or comments.</p>
-           <form onSubmit={popupSubmit}>
+           <form onSubmit={submitForm}>
            {/*  {renderEvents(mydata)}  */}
            {/* element 0 */}
            <div>
