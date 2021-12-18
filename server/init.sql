@@ -122,9 +122,9 @@ ALTER TABLE ONLY public.family_events ALTER COLUMN id SET DEFAULT nextval('publi
 -- Set up information in table
 
 COPY public.events (id, event_name, venue, created_at, updated_at) FROM stdin;
-1	Ceremony	Hyatt Chesapeake Bay Manor Lawn	2021-05-17 00:00:00	2021-05-17 00:00:00
-2	Reception	Hyatt Chesapeake Bay Chesapeake Ballroom	2021-05-17 00:00:00	2021-05-17 00:00:00
-3	Meet & Greet + Sangeet	Hyatt Chesapeake Bay Choptank Ballroom	2021-05-17 00:00:00	2021-05-17 00:00:00
+1	ceremony	Hyatt Chesapeake Bay Manor Lawn	2021-05-17 00:00:00	2021-05-17 00:00:00
+2	reception	Hyatt Chesapeake Bay Chesapeake Ballroom	2021-05-17 00:00:00	2021-05-17 00:00:00
+3	sangeet	Hyatt Chesapeake Bay Choptank Ballroom	2021-05-17 00:00:00	2021-05-17 00:00:00
 \.
 
 
