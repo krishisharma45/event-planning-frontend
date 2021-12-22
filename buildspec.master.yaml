@@ -32,7 +32,7 @@ phases:
       commands:
         - echo Pushing the image to the ECR repo...
         - docker push $AWS_FULL_IMAGE_NAME_LATEST
-        - printf '[{"name":"event-planning","imageUri":"527761931337.dkr.ecr.us-east-1.amazonaws.com/event-planning:latest"}]' > imagedefinitions.json
+        - printf '[{"name":"event_planning","imageUri":"527761931337.dkr.ecr.us-east-1.amazonaws.com/event-planning:latest"}]' > imagedefinitions.json
     artifacts:
       files:
         - imagedefinitions.json
