@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: event-planning
+    IMAGE_NAME: event-planning
+    AWS_ACCOUNT_ID: 527761931337
+    AWS_DEFAULT_REGION: us-east-1
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.0
+    commands:
+      - export DOCKER_BUILDKIT=1
+      - export COMPOSE_DOCKER_CLI_BUILD=1
+    build:
+      commands:
+        - echo Hello you are on a branch...

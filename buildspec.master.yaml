@@ -1,0 +1,38 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: event-planning
+    IMAGE_NAME: event-planning
+    AWS_ACCOUNT_ID: 527761931337
+    AWS_DEFAULT_REGION: us-east-1
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.0
+    commands:
+      - export DOCKER_BUILDKIT=1
+      - export COMPOSE_DOCKER_CLI_BUILD=1
+    pre_build:
+      commands:
+        - echo Logging into AWS ECR...
+        - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 527761931337.dkr.ecr.us-east-1.amazonaws.com
+        - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+        - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+        - IMAGE_TAG=${COMMIT_HASH:=latest}
+        - AWS_FULL_IMAGE_NAME=$REPOSITORY_URI:$IMAGE_TAG
+        - AWS_FULL_IMAGE_NAME_LATEST=$REPOSITORY_URI:latest
+    build:
+      commands:
+        - echo Building the image...
+        - docker build -t $IMAGE_NAME -f ./services/api/Dockerfile .
+        - docker tag $IMAGE_NAME:latest $AWS_FULL_IMAGE_NAME_LATEST
+    post_build:
+      commands:
+        - echo Pushing the image to the ECR repo...
+        - docker push $AWS_FULL_IMAGE_NAME_LATEST
+        - printf '[{"name":"event-planning","imageUri":"527761931337.dkr.ecr.us-east-1.amazonaws.com/event-planning:latest"}]' > imagedefinitions.json
+    artifacts:
+      files:
+        - imagedefinitions.json
