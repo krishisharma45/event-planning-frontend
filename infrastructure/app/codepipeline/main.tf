@@ -25,7 +25,7 @@ resource "aws_codepipeline" "codepipeline" {
       owner = "AWS"
       provider = "CodeStarSourceConnection"
       version = "1"
-      output_artifacts = ["source_output"]
+      output_artifacts = ["SourceArtifact"]
       configuration = {
         ConnectionArn = aws_codestarconnections_connection.github-connection.arn
         FullRepositoryId = var.github_repo_name
@@ -43,8 +43,8 @@ resource "aws_codepipeline" "codepipeline" {
       owner = "AWS"
       provider = "CodeBuild"
       version = "1"
-      input_artifacts = ["source_output"]
-      output_artifacts = ["build_output"]
+      input_artifacts = ["SourceArtifact"]
+      output_artifacts = ["BuildArtifact"]
       configuration = {
         ProjectName = var.codebuild_project_name
       }
@@ -59,7 +59,7 @@ resource "aws_codepipeline" "codepipeline" {
       owner = "AWS"
       provider = "ECS"
       version = "1"
-      input_artifacts = ["build_output"]
+      input_artifacts = ["BuildArtifact"]
       configuration = {
         "ClusterName" = var.ecs_cluster_name
         "ServiceName" = var.ecs_service_name
