@@ -65,6 +65,7 @@ func main() {
 		logger: logger,
 		models: models.NewModels(db),
 	}
+	// lets go
 	app.routes()
 }
 
