@@ -46,12 +46,13 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         "ec2:CreateNetworkInterface",
         "ec2:DescribeDhcpOptions",
         "ec2:DescribeNetworkInterfaces",
+        "ec2:DeleteNetworkInterface",
         "ec2:DescribeSubnets",
         "ec2:DescribeSecurityGroups",
         "ec2:DescribeVpcs",
         "ec2:CreateNetworkInterfacePermission",
         "s3:*",
-        "codestar-connection:UseConnection"
+        "codestar-connections:UseConnection"
       ],
       "Resource": [
         "*"
