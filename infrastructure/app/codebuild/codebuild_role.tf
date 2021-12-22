@@ -45,7 +45,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         "ecr:CompleteLayerUpload",
         "ec2:CreateNetworkInterface",
         "ec2:DescribeDhcpOptions",
-        "ec2:DescribeNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
         "ec2:DescribeSubnets",
         "ec2:DescribeSecurityGroups",
         "ec2:DescribeVpcs",
