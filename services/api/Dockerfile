@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 8080
 
+RUN echo "new image..."
+
 CMD [ "go", "run", "./server" ]
