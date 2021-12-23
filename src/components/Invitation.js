@@ -1,6 +1,6 @@
 import 'styles/Invitation.css';
 import React, {useEffect, useState } from 'react';
-import Rsvp from 'components/Rsvp';
+import RSVP from 'components/RSVP';
 
 
 // Hi hani, I want the flow to be -> once auth'd in, load up the events for that family (loadEvents)
@@ -11,7 +11,7 @@ import Rsvp from 'components/Rsvp';
 const Invitation = (props) => {
     const [mydata, setMyData] = useState(null);
     const [isAttending, setIsAttending] = useState(false);
-    const [numberAttending, setNumberAttending] = useState(0);
+    const [eventId, setEventID] = useState(0);
     const [rsvpData, setRsvpData] = useState(null);
     const [checked, setChecked] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -51,12 +51,17 @@ const Invitation = (props) => {
         e.preventDefault();
         try {
             console.log("HELLO!");
+            console.log(props)
+            console.log(props.eventId)
+            console.log(checked)
+
+
             const requestOptions = {
                 method: "PUT",
                 body: JSON.stringify(),
             }
 
-            const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + mydata.message[1].event_id + "/" + numberAttendingEvent1, requestOptions)
+            const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + props.eventId + "/" + numberAttendingEvent1, requestOptions)
             const rsvpData = await response.json();
             if (response.status!==200 && response.status!==400) {
                 alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -69,11 +74,10 @@ const Invitation = (props) => {
     };
 
     //showGuestCount should essentially be a simple number input for each event that only shows up underneath the event if user is attending, once users submit this, I want to take the number of people they have attending for each particular event and pass it to `SubmitResponse`
-    const showGuestCount = (mydata) => {
-
-      //
-        console.log("Should be showing thisss!!");
-
+    const showGuestCount = () => {
+      return (
+        
+      )
 
     };
 
@@ -123,26 +127,14 @@ const Invitation = (props) => {
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" onChange={setChecked} />
+                    <input class="switch-input" type="checkbox" onChange={showGuestCount} />
                     <span class="switch-label" data-on="Accept" data-off="Decline"></span>
                     <span class="switch-handle"></span>
                     </label>
                   </div>
                 </div>
 
-                {setChecked && <RSVP
-                content={<>
-                  <p className="Event-count">Number of Attending Guests:</p>
-                  <form onSubmit={submitResponse}>
-                  <label>attending
-                      <input type="integer" name="number_attending" defaultValue={mydata.message[0].members} maxLength="2" value={numberAttendingEvent1} onChange={e => setNumberAttendingEvent1(e.target.value)} event_id = {mydata.message[0].event_id}/>
-                  </label>
-                    <input className="Submit-button" type="submit" value="Submit" />
-                  </form>
-                </>}
-              
-                />}
-
+                
                 <div>
                   <h2 className="event-header"> {mydata.message[1].event_name}</h2>
                   <p className="event-detail">{mydata.message[1].venue}</p>

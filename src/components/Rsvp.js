@@ -1,7 +1,9 @@
-export default function Rsvp(props) {
+export default function RSVP(props) {
     return (
+      <div>
         <div>
-            {props.content}
+          {props.content}
         </div>
+      </div>
     );
-};
+  };
