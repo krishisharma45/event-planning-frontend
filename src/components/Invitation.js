@@ -15,6 +15,7 @@ const Invitation = (props) => {
     const [rsvpData, setRsvpData] = useState(null);
     const [checked, setChecked] = useState(false);
     const [checked2, setChecked2] = useState(false);
+    const [numberAttendingEvent1, setNumberAttendingEvent1] = useState(0)
 
 
     // loadEvents will load up the events for that family
@@ -55,7 +56,7 @@ const Invitation = (props) => {
                 body: JSON.stringify(),
             }
 
-            const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + mydata.message[1].event_id + "/" + numberAttending, requestOptions)
+            const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + mydata.message[1].event_id + "/" + numberAttendingEvent1, requestOptions)
             const rsvpData = await response.json();
             if (response.status!==200 && response.status!==400) {
                 alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -128,6 +129,19 @@ const Invitation = (props) => {
                     </label>
                   </div>
                 </div>
+
+                {setChecked && <RSVP
+                content={<>
+                  <p className="Event-count">Number of Attending Guests:</p>
+                  <form onSubmit={submitResponse}>
+                  <label>attending
+                      <input type="integer" name="number_attending" defaultValue={mydata.message[0].members} maxLength="2" value={numberAttendingEvent1} onChange={e => setNumberAttendingEvent1(e.target.value)} event_id = {mydata.message[0].event_id}/>
+                  </label>
+                    <input className="Submit-button" type="submit" value="Submit" />
+                  </form>
+                </>}
+              
+                />}
 
                 <div>
                   <h2 className="event-header"> {mydata.message[1].event_name}</h2>
