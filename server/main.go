@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	secretName   string = "arn:aws:secretsmanager:us-east-1:527761931337:secret:rds/event-planning-db-Lc3jfe"
+	secretName   string = "arn:aws:secretsmanager:us-east-1:527761931337:secret:rds/practice-db-ehwLNY"
 	region       string = "us-east-1"
 	versionStage string = "AWSCURRENT"
 )
