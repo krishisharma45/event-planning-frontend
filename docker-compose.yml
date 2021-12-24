@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/workspace
     ports:
-      - '58000:3000'
+      - '3000:3000'
 
   api:
     container_name: api
@@ -21,9 +21,7 @@ services:
     volumes:
       - .:/workspace
     ports:
-      - '59000:8080'
-    depends_on:
-      - db
+      - '8080:8080'
 
   db:
     container_name: database
@@ -31,7 +29,6 @@ services:
     environment:
       - AWS_ACCESS_KEY
       - AWS_SECRET_KEY
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - '5432:5432'
-#    volumes:
-#      - ./server/init.sql:/docker-entrypoint-initdb.d/init.sql

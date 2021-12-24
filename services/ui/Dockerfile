@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "nodemon", "start" ]
+CMD [ "npm", "start"]

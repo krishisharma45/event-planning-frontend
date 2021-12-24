@@ -1,0 +1,1 @@
+aws rds stop-db-instance --db-instance-identifier practice-db
