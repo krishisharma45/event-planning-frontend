@@ -14,7 +14,7 @@ const InvitationPage = (props) => {
     // Update the document title using the browser API
     const loadEvents = async () => {
       try{
-        const response = await fetch("http://localhost:8080/v1/family/events/" + props.familyID);
+        const response = await fetch("http://luvandkrishi.com:8080/v1/family/events/" + props.familyID);
         const data = await response.json();
         setMyData(data);
         if (response.status !== 200 && response.status !== 400) {

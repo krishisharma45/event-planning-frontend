@@ -52,7 +52,7 @@ function RsvpPage(props) {
         //     body: JSON.stringify(payload),
         // }
         //alert(requestOptions)
-        fetch("http://localhost:8080/v1/validate/" + secretCode + "/" + familyName)
+        fetch("http://luvandkrishi.com:8080/v1/validate/" + secretCode + "/" + familyName)
         .then((response) => {
           if (response.status !== 200 && response.status !== 400) {
             alert("Hi! Something seems to be off on our end, please email luvandkrishi@gmail.com!")
