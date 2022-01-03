@@ -22,21 +22,16 @@ services:
       - .:/workspace
     ports:
       - '59000:8080'
-    volumes:
-      - .:/workspace
     depends_on:
       - db
 
   db:
     container_name: database
-    image: postgres:10.5
+    image: postgres:13.3
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_HOSTNAME
-      - POSTGRES_PORT
-      - POSTGRES_DB
+      - AWS_ACCESS_KEY
+      - AWS_SECRET_KEY
     ports:
       - '5432:5432'
-    volumes:
-      - ./server/init.sql:/docker-entrypoint-initdb.d/init.sql
+#    volumes:
+#      - ./server/init.sql:/docker-entrypoint-initdb.d/init.sql
