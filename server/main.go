@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"event-planning/server/models"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -12,6 +13,22 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
+
+var (
+	secretName   string = "arn:aws:secretsmanager:us-east-1:527761931337:secret:rds/practice-db-ehwLNY"
+	region       string = "us-east-1"
+	versionStage string = "AWSCURRENT"
+)
+
+//SecretData is used to get secret data from AWS
+type SecretData struct {
+	DBUser   string `json:"username"`
+	DbPass   string `json:"password"`
+	Port     string `json:"port"`
+	Host     string `json:"host"`
+	DbName   string `json:"dbName"`
+	DbEngine string `json:"dbEngine"`
+}
 
 //AppStatus is used to track the status of the application
 type AppStatus struct {
@@ -29,7 +46,10 @@ func main() {
 	var cfg config
 	flag.IntVar(&cfg.port, "port", 8080, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Application environment")
-	flag.StringVar(&cfg.db.dsn, "dsn", "postgresql://luvjain:postgres@database/event_planning?sslmode=disable", "Postgres connection string")
+	secretData, err := getSecretFromAws()
+	connectionString := getDsn(secretData)
+	fmt.Println(connectionString)
+	flag.StringVar(&cfg.db.dsn, "dsn", connectionString, "Postgres connection string")
 	flag.StringVar(&cfg.jwt.secret, "jwt-secret", "2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160", "secret")
 	flag.Parse()
 
@@ -45,6 +65,7 @@ func main() {
 		logger: logger,
 		models: models.NewModels(db),
 	}
+	// lets go
 	app.routes()
 }
 
