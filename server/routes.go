@@ -23,6 +23,7 @@ func (app *application) routes() *gin.Engine {
 	r.GET("/v1/event/:id", app.getOneEvent)
 	r.GET("/v1/family/events/:family_id", app.getEventsForFamily)
 	r.PUT("/v1/family/events/:family_id/:event_id/:attending", app.rsvpToEvent)
+	r.PUT("v1/family/events/decline/:family_id", app.declineEvents)
 	// back end querying urls
 	// r.PUT("/v1/family/:family_name/:members", app.addFamily)
 	r.GET("/v1/count/events/:event_id", app.getAttendingForEvent)

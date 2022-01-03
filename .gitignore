@@ -18,6 +18,7 @@ yarn-error.log*
 
 .env
 .idea/
+.vscode/
 venv/
 scratch/
 postgres-data/

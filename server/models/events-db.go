@@ -156,6 +156,23 @@ func (m *DBModel) GetEvents(id int) (*Events, error) {
 	return &event, nil
 }
 
+//DeclineAllEvents will set attending = -1 for all events
+func (m *DBModel) DeclineAllEvents(id int, constDecline int) (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	updatedTime := time.Now()
+
+	query := `update family_events set attending = $2, updated_at = $3 where family_id = $1`
+	rows, err := m.DB.ExecContext(ctx, query, id, constDecline, updatedTime)
+	count, err := rows.RowsAffected()
+
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
+}
+
 // //Addfamily will add a particular family
 // func (m *DBModel) GetEvents(id int) (*Events, error) {
 // 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
