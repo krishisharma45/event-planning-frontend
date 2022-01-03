@@ -1,6 +1,6 @@
 import 'styles/Invitation.css';
 import React, {useEffect, useState } from 'react';
-import RSVP from 'components/RSVP';
+import Rsvp from 'components/Rsvp';
 
 
 // Hi hani, I want the flow to be -> once auth'd in, load up the events for that family (loadEvents)
@@ -229,7 +229,7 @@ const notAttending = async (e) => {
                   </div>
                 </div>
 
-                {isAttendingEvent1 && <RSVP
+                {isAttendingEvent1 && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Attending Guests:</p>
                   <form onSubmit={submitResponseEvent1}>
@@ -257,7 +257,7 @@ const notAttending = async (e) => {
                 </div>
 
 
-                {isAttendingEvent2 && <RSVP
+                {isAttendingEvent2 && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Attending Guests:</p>
                   <form onSubmit={submitResponseEvent2}>
@@ -282,7 +282,7 @@ const notAttending = async (e) => {
                   </div>
                 </div>
 
-                {isAttendingEvent3 && <RSVP
+                {isAttendingEvent3 && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Attending Guests:</p>
                   <form onSubmit={submitResponseEvent3}>
@@ -295,7 +295,7 @@ const notAttending = async (e) => {
                 }
 
 
-                {!isAttendingEvent1 && !isAttendingEvent2 && !isAttendingEvent3 && <RSVP
+                {!isAttendingEvent1 && !isAttendingEvent2 && !isAttendingEvent3 && <Rsvp
                 content={<>
                   <form onSubmit={notAttending}>
                     <input className="Submit-button" type="submit" value="Decline All Events" />
