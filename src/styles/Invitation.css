@@ -238,3 +238,16 @@ input {
 .switch-left-right .switch-input:checked ~ .switch-label {
 	background: inherit;
 }
+
+.final-submit {
+	font-family: 'OpenSans-Light';
+	margin-top: 7vh;
+	margin-bottom: 5vh;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	padding-left: 1vh;
+	padding-right: 1vh;
+	color: #030E2A;
+	background-color: #F0C2D1;
+	font-weight: bold;
+  }

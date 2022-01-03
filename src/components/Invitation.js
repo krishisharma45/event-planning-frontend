@@ -297,9 +297,8 @@ const notAttending = async (e) => {
 
                 {!isAttendingEvent1 && !isAttendingEvent2 && !isAttendingEvent3 && <RSVP
                 content={<>
-                  <p className="Event-count">I won't be attending</p>
                   <form onSubmit={notAttending}>
-                    <input className="Submit-button" type="submit" value="Submit" />
+                    <input className="Submit-button" type="submit" value="Decline All Events" />
                   </form>
                 </>}
               

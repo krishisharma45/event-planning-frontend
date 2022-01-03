@@ -126,6 +126,7 @@ input {
 }
 
 .Submit-button {
+  width: auto;
   font-family: 'OpenSans-Light';
   font-size: 1em;
   margin-top: 2em;
