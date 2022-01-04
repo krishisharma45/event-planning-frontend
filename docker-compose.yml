@@ -31,5 +31,3 @@ services:
       - AWS_SECRET_KEY
     ports:
       - '5432:5432'
-#    volumes:
-#      - ./server/init.sql:/docker-entrypoint-initdb.d/init.sql
