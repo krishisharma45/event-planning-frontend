@@ -121,7 +121,7 @@ func (m *DBModel) RsvpToEvent(familyID int, eventID int, attending int) (int64, 
 	//TODO:luv figure this out
 	// stmt, _ := m.DB.Prepare(`select id, family_id, event_id, attending created_at, updated_at from family_events where family_id = $1`)
 	// res, err := stmt.Exec(stmt)
-	query := `update family_events set family_id = $1, event_id = $2, attending = $3, updated_at = $4 where family_id = $1 and event_id = $2 `
+	query := `update family_events set family_id = $1, event_id = $2, attending = $3, updated_at = $4 where family_id = $1 and event_id = $2`
 	res, err := m.DB.ExecContext(ctx, query, familyID, eventID, attending, updatedTime)
 	count, err := res.RowsAffected()
 	if err != nil {
@@ -137,7 +137,7 @@ func (m *DBModel) GetEvents(id int) (*Events, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	query := `select id, event_name, venue, created_at, updated_at from event where id = $1`
+	query := `select id, event_name, venue, created_at, updated_at from events where id = $1`
 	row := m.DB.QueryRowContext(ctx, query, id)
 
 	var event Events

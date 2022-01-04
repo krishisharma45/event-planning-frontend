@@ -1,4 +1,4 @@
-export default function RSVP(props) {
+export default function Rsvp(props) {
     return (
       <div>
         <div>

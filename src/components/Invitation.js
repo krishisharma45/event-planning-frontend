@@ -1,6 +1,6 @@
 import 'styles/Invitation.css';
 import React, {useEffect, useState } from 'react';
-import RSVP from 'components/RSVP';
+import Rsvp from 'components/Rsvp';
 
 
 // Hi hani, I want the flow to be -> once auth'd in, load up the events for that family (loadEvents)
@@ -32,7 +32,7 @@ const Invitation = (props) => {
     // loadEvents will load up the events for that family
     const loadEvents = async () => {
       try{
-        const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID);
+        const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID);
         const data = await response.json();
         setMyData(data);
         if (response.status !== 200 && response.status !== 400) {
@@ -68,7 +68,7 @@ const Invitation = (props) => {
                 body: JSON.stringify(),
             }
 
-            const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingEvent1, requestOptions)
+            const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingEvent1, requestOptions)
             const rsvpData = await response.json();
             if (response.status!==200 && response.status!==400) {
                 alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -91,7 +91,7 @@ const Invitation = (props) => {
               body: JSON.stringify(),
           }
 
-          const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingEvent2, requestOptions)
+          const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingEvent2, requestOptions)
           const rsvpData = await response.json();
           if (response.status!==200 && response.status!==400) {
               alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -114,7 +114,7 @@ const Invitation = (props) => {
             body: JSON.stringify(),
         }
 
-        const response = await fetch("http://localhost:59000/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingEvent3, requestOptions)
+        const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingEvent3, requestOptions)
         const rsvpData = await response.json();
         if (response.status!==200 && response.status!==400) {
             alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -137,7 +137,7 @@ const notAttending = async (e) => {
           body: JSON.stringify(),
       }
 
-      const response = await fetch("http://localhost:59000/v1/family/events/decline/" + props.familyID, requestOptions)
+      const response = await fetch("http://luvandkrishi.com/v1/family/events/decline/" + props.familyID, requestOptions)
       const rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -229,7 +229,7 @@ const notAttending = async (e) => {
                   </div>
                 </div>
 
-                {isAttendingEvent1 && <RSVP
+                {isAttendingEvent1 && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Attending Guests:</p>
                   <form onSubmit={submitResponseEvent1}>
@@ -257,7 +257,7 @@ const notAttending = async (e) => {
                 </div>
 
 
-                {isAttendingEvent2 && <RSVP
+                {isAttendingEvent2 && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Attending Guests:</p>
                   <form onSubmit={submitResponseEvent2}>
@@ -282,7 +282,7 @@ const notAttending = async (e) => {
                   </div>
                 </div>
 
-                {isAttendingEvent3 && <RSVP
+                {isAttendingEvent3 && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Attending Guests:</p>
                   <form onSubmit={submitResponseEvent3}>
@@ -295,7 +295,7 @@ const notAttending = async (e) => {
                 }
 
 
-                {!isAttendingEvent1 && !isAttendingEvent2 && !isAttendingEvent3 && <RSVP
+                {!isAttendingEvent1 && !isAttendingEvent2 && !isAttendingEvent3 && <Rsvp
                 content={<>
                   <form onSubmit={notAttending}>
                     <input className="Submit-button" type="submit" value="Decline All Events" />

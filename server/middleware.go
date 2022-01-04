@@ -11,13 +11,13 @@ import (
 //This should be where we allow access from different places/add headers/keys
 func (app *application) enableCORS(next *gin.Engine) gin.HandlerFunc {
 	return cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:58000"},
+		AllowOrigins:     []string{"http://*.luvandkrishi.com"},
 		AllowMethods:     []string{"PUT", "GET"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://luvandkrishi.com"
+			return origin == "http://luvandkrishi.com"
 		},
 		MaxAge: 12 * time.Hour,
 	})

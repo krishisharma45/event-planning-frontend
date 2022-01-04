@@ -15,7 +15,7 @@ var (
 	httpClientError              = 400
 	httpServerError              = 500
 	ErrTemplateGetFamily         = "Unexpected error retrieving a family"
-	ErrTemplateGetFamilyEvents   = "SQL failure while retrieving events for family. Family id is: %s"
+	ErrTemplateGetFamilyEvents   = "SQL failure while retrieving events for family. Family id is: %d"
 	ErrTemplateAddFamily         = "SQL failure while adding family. Family name is: %s"
 	ErrTemplateAttendingCount    = "SQL failure while retrieving number attending. Event id is %s"
 	ErrTemplateRSVPClient        = "Invalid operation! User tried to enter in attending number more than family members %s"
