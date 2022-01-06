@@ -53,13 +53,13 @@ func (m *DBModel) ValidateFamily(secretID int, familyName string) (*AuthResponse
 }
 
 //GetEventsForFamily will return events for a particular family
-func (m *DBModel) GetEventsForFamily(family_id int) (*[]EventDetails, error) {
+func (m *DBModel) GetEventsForFamily(familyID int) (*[]EventDetails, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	//query := `select event_id, attending, created_at, updated_at from family_events fe where fe.family_id = $1`
-	secondQuery := `select family_id, family_name, members, event_name, venue, event_id, attending from family_events fe left join events e on e.id = fe.event_id left join family f on f.id = fe.family_id where family_id = $1`
-	rows, err := m.DB.QueryContext(ctx, secondQuery, family_id)
+	secondQuery := `select family_id, family_name, members, event_name, venue, event_id, attending, attending_children from family_events fe left join events e on e.id = fe.event_id left join family f on f.id = fe.family_id where family_id = $1`
+	rows, err := m.DB.QueryContext(ctx, secondQuery, familyID)
 	defer rows.Close()
 	if err != nil {
 		fmt.Print(err)
@@ -77,6 +77,7 @@ func (m *DBModel) GetEventsForFamily(family_id int) (*[]EventDetails, error) {
 			&eventDetail.Venue,
 			&eventDetail.EventID,
 			&eventDetail.Attending,
+			&eventDetail.AttendingChildren,
 		)
 		if err != nil {
 			return &[]EventDetails{}, err
@@ -113,7 +114,7 @@ func (m *DBModel) GetAttendingForEvent(id int) (int64, error) {
 }
 
 //RsvpToEvent will rsvp a family to an event with a number attending
-func (m *DBModel) RsvpToEvent(familyID int, eventID int, attending int) (int64, error) {
+func (m *DBModel) RsvpToEvent(familyID int, eventID int, attending int, attendingChildren int) (int64, error) {
 	updatedTime := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -121,8 +122,8 @@ func (m *DBModel) RsvpToEvent(familyID int, eventID int, attending int) (int64, 
 	//TODO:luv figure this out
 	// stmt, _ := m.DB.Prepare(`select id, family_id, event_id, attending created_at, updated_at from family_events where family_id = $1`)
 	// res, err := stmt.Exec(stmt)
-	query := `update family_events set family_id = $1, event_id = $2, attending = $3, updated_at = $4 where family_id = $1 and event_id = $2`
-	res, err := m.DB.ExecContext(ctx, query, familyID, eventID, attending, updatedTime)
+	query := `update family_events set family_id = $1, event_id = $2, attending = $3, attending_children = $4, updated_at = $5 where family_id = $1 and event_id = $2`
+	res, err := m.DB.ExecContext(ctx, query, familyID, eventID, attending, attendingChildren, updatedTime)
 	count, err := res.RowsAffected()
 	if err != nil {
 		return -1, err

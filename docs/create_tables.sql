@@ -22,6 +22,7 @@ CREATE TABLE public.family_events (
     family_id integer,
     event_id integer,
     attending integer,
+    attending_children integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );

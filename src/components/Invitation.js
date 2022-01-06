@@ -22,6 +22,9 @@ const Invitation = (props) => {
     const [numberAttendingReception, setNumberAttendingReception] = useState(0)
     const [numberAttendingCeremony, setNumberAttendingCeremony] = useState(0)
     const [numberAttendingSangeet, setNumberAttendingSangeet] = useState(0)
+    const [numberChildrenAttendingReception, setNumberChildrenAttendingReception] = useState(0)
+    const [numberChildrenAttendingCeremony, setNumberChildrenAttendingCeremony] = useState(0)
+    const [numberChildrenAttendingSangeet, setNumberChildrenAttendingSangeet] = useState(0)
 
 
 
@@ -74,21 +77,21 @@ const finishedSubmit = async (e) => {
       }
 
       console.log("Submitting response for reception with", numberAttendingReception);
-      var response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingReception, requestOptions)
+      var response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingReception + "/" + numberChildrenAttendingReception, requestOptions)
       var rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
       }
 
       console.log("Submitting response for ceremony with", numberAttendingCeremony);
-      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingCeremony, requestOptions)
+      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingCeremony + "/" + numberChildrenAttendingCeremony, requestOptions)
       rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
       }
 
       console.log("Submitting response for sangeet with", numberAttendingSangeet);
-      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingSangeet, requestOptions)
+      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingSangeet + "/" + numberChildrenAttendingSangeet, requestOptions)
       rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -173,8 +176,10 @@ const finishedSubmit = async (e) => {
 
                 {isAttendingSangeet && <Rsvp
                 content={<>
-                  <p className="Event-count">Number of Attending Guests:</p>
-                  <input type="integer" name="number_attending" defaultValue={mydata.message[0].attending} maxLength="2"  onChange={e =>  { setNumberAttendingSangeet(e.target.value); setEventID(3)}} />
+                  <p className="Event-count">Number of Total Attending Guests:</p>
+                  <input type="integer" name="number_attending_sangeet" defaultValue={mydata.message[0].attending} maxLength="2"  onChange={e =>  { setNumberAttendingSangeet(e.target.value); setEventID(3)}} />
+                  <p className="Event-count">Number of Attending Children (Under 12):</p>
+                  <input type="integer" name="children_attending_sangeet" defaultValue={mydata.message[0].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingSangeet(e.target.value)}} />
                 </>}
               
                 />
@@ -197,8 +202,10 @@ const finishedSubmit = async (e) => {
 
                 {isAttendingCeremony && <Rsvp
                 content={<>
-                  <p className="Event-count">Number of Attending Guests:</p>
-                  <input type="integer" name="number_attending" defaultValue={mydata.message[1].attending} maxLength="2"  onChange={e =>  { setNumberAttendingCeremony(e.target.value); setEventID(2)}} />
+                  <p className="Event-count">Number of Total Attending Guests:</p>
+                  <input type="integer" name="number_attending_ceremony" defaultValue={mydata.message[1].attending} maxLength="2"  onChange={e =>  { setNumberAttendingCeremony(e.target.value); setEventID(2)}} />
+                  <p className="Event-count">Number of Attending Children (Under 12):</p>
+                  <input type="integer" name="children_attending_ceremony" defaultValue={mydata.message[1].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingCeremony(e.target.value)}} />
                 </>}
               
                 />
@@ -221,18 +228,14 @@ const finishedSubmit = async (e) => {
 
                 {isAttendingReception && <Rsvp
                 content={<>
-                  <p className="Event-count">Number of Attending Guests:</p>
-                  <input type="integer" name="number_attending" defaultValue={mydata.message[2].attending} maxLength="2"  onChange={e => {setNumberAttendingReception(e.target.value); setEventID(1)}} />
+                  <p className="Event-count">Number of Total Attending Guests:</p>
+                  <input type="integer" name="number_attending_reception" defaultValue={mydata.message[2].attending} maxLength="2"  onChange={e => {setNumberAttendingReception(e.target.value); setEventID(1)}} />
+                  <p className="Event-count">Number of Attending Children (Under 12):</p>
+                  <input type="integer" name="children_attending_reception" defaultValue={mydata.message[2].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingReception(e.target.value)}} />
                 </>}
               
                 />
                 }
-
-                
-
-
-
-
 
                 
                 {/* I want to have a submit button ideally that submits the input for all 3. The reason I broke it up was because it seemed the caveman/easier style to have individual handlers and submit for each but user experience is weird */}
@@ -248,10 +251,6 @@ const finishedSubmit = async (e) => {
                 />
                 }
                             
-
-
-
-
              </>
              : <> </>
          }

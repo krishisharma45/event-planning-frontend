@@ -239,12 +239,20 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 			"error":        err.Error(),
 		})
 	}
-	//TODO: luv add validation
 	attending, err := validateAttending(c.Params.ByName("attending"))
 	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
 			"message":      "Invalid number attending",
+			"error":        err.Error(),
+		})
+	}
+
+	attendingChildren, err := validateAttending(c.Params.ByName("attending_children"))
+	if err != nil {
+		c.JSON(httpClientError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "Invalid number of children attending",
 			"error":        err.Error(),
 		})
 	}
@@ -255,14 +263,15 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 
 	// }
 
-	app.logger.Printf("Family %d will have %d people attending %d event id", familyID, attending, eventID)
+	app.logger.Printf("Family %d will have %d total people and %d children attending %d event id", familyID, attending, attendingChildren, eventID)
 
-	_, err = app.models.DB.RsvpToEvent(familyID, eventID, attending)
+	_, err = app.models.DB.RsvpToEvent(familyID, eventID, attending, attendingChildren)
 	if err != nil {
 		app.logger.Printf("Something went wrong with sql query to put rsvp %s", err)
 		app.logger.Printf("Family id is %v \n", familyID)
 		app.logger.Printf("Event id is %v \n", eventID)
-		app.logger.Printf("Number attending is %v \n", eventID)
+		app.logger.Printf("Number attending is %v \n", attending)
+		app.logger.Printf("Number of children attending is %v \n", attendingChildren)
 
 		c.JSON(httpServerError, gin.H{
 			"Content-Type": "application/json",
