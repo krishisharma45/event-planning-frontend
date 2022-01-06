@@ -3,11 +3,6 @@ import React, {useEffect, useState } from 'react';
 import Rsvp from 'components/Rsvp';
 
 
-// Hi hani, I want the flow to be -> once auth'd in, load up the events for that family (loadEvents)
-// Load the X number of events and for each of them, gather a response if they'll be attending or not.
-// If attending an event, gather number of people attending that particular event id
-// On submit of that form, send a put request for that particular event id with those particular number of people attending
-
 const Invitation = (props) => {
     const [mydata, setMyData] = useState(null);
     const [isAttendingEvent1, setIsAttendingEvent1] = useState(null);
@@ -26,13 +21,21 @@ const Invitation = (props) => {
     const [numberAttendingEvent2, setNumberAttendingEvent2] = useState(0)
     const [numberAttendingEvent3, setNumberAttendingEvent3] = useState(0)
 
+    const env = () => {
+        if (process.env.REACT_APP_ENV==="dev") {
+          console.log("Development environment running...")
+          return "http://localhost:59000"
+        }
 
+        else {
+          console.log("Production environment running...")
+          return "http://luvandkrishi.com"
+        }
+    }
 
-
-    // loadEvents will load up the events for that family
     const loadEvents = async () => {
       try{
-        const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID);
+        const response = await fetch(env() + "/v1/family/events/" + props.familyID);
         const data = await response.json();
         setMyData(data);
         if (response.status !== 200 && response.status !== 400) {
@@ -68,7 +71,7 @@ const Invitation = (props) => {
                 body: JSON.stringify(),
             }
 
-            const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingEvent1, requestOptions)
+            const response = await fetch(env() + "/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingEvent1, requestOptions)
             const rsvpData = await response.json();
             if (response.status!==200 && response.status!==400) {
                 alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -91,7 +94,7 @@ const Invitation = (props) => {
               body: JSON.stringify(),
           }
 
-          const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingEvent2, requestOptions)
+          const response = await fetch(env() + "/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingEvent2, requestOptions)
           const rsvpData = await response.json();
           if (response.status!==200 && response.status!==400) {
               alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -102,58 +105,54 @@ const Invitation = (props) => {
           return rsvpData.message
       } catch {
       }
-  };
+   };
 
-  const submitResponseEvent3 = async (e) => {
-    e.preventDefault();
-    try {
-      console.log("Hey this is event 3's handler!");
+    const submitResponseEvent3 = async (e) => {
+        e.preventDefault();
+        try {
+          console.log("Hey this is event 3's handler!");
 
-        const requestOptions = {
-            method: "PUT",
-            body: JSON.stringify(),
+            const requestOptions = {
+                method: "PUT",
+                body: JSON.stringify(),
+            }
+
+            const response = await fetch(env() + "/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingEvent3, requestOptions)
+            const rsvpData = await response.json();
+            if (response.status!==200 && response.status!==400) {
+                alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+            }
+            console.log(rsvpData);
+            setRsvpData(rsvpData);
+            setSubmittedEvent3(true)
+            return rsvpData.message
+        } catch {
         }
+    };
 
-        const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingEvent3, requestOptions)
-        const rsvpData = await response.json();
-        if (response.status!==200 && response.status!==400) {
-            alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
-        }
-        console.log(rsvpData);
-        setRsvpData(rsvpData);
-        setSubmittedEvent3(true)
-        return rsvpData.message
-    } catch {
-    }
-};
+    const notAttending = async (e) => {
+      e.preventDefault();
+      try {
+        console.log("User is not attending wedding!");
 
-const notAttending = async (e) => {
-  e.preventDefault();
-  try {
-    console.log("User is not attending wedding!");
+          const requestOptions = {
+              method: "PUT",
+              body: JSON.stringify(),
+          }
 
-      const requestOptions = {
-          method: "PUT",
-          body: JSON.stringify(),
+          const response = await fetch(env() + "/v1/family/events/decline/" + props.familyID, requestOptions)
+          const rsvpData = await response.json();
+          if (response.status!==200 && response.status!==400) {
+              alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+          }
+          console.log(rsvpData);
+          setRsvpData(rsvpData);
+          setSubmittedEvent3(true)
+          return rsvpData.message
+      } catch {
       }
+    };
 
-      const response = await fetch("http://luvandkrishi.com/v1/family/events/decline/" + props.familyID, requestOptions)
-      const rsvpData = await response.json();
-      if (response.status!==200 && response.status!==400) {
-          alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
-      }
-      console.log(rsvpData);
-      setRsvpData(rsvpData);
-      setSubmittedEvent3(true)
-      return rsvpData.message
-  } catch {
-  }
-};
-
-// check all 3 attending variables, render if all 3 are false -> send in -1 for all events
-// if at least 1 attending is true, render I'm ready!
-
-    //attendingEventX should essentially be a toggle if user is attending (flipped toggle to accept) for any such event.
     const attendingEvent1 = () => {
       setIsAttendingEvent1(!isAttendingEvent1)
     };
@@ -166,48 +165,6 @@ const notAttending = async (e) => {
       setIsAttendingEvent3(!isAttendingEvent3)
     };
 
-    // const showGuestCount2 = (event_id, name) => {
-      
-
-    //   <RSVP
-    //             content={<>
-    //               <p className="Event-count">Number of Attending Guests:</p>
-    //               <form onSubmit={popupSubmit}>
-    //               <label>attending
-    //                   <input type="integer" name="number_attending" defaultValue={mydata.message[1].members} maxLength="2" value={numberAttendingEvent2} onChange={e => setNumberAttendingEvent2(e.target.value)} />
-    //               </label>
-    //                 <input className="Submit-button" type="submit" value="Submit" />
-    //               </form>
-    //             </>}
-              
-    //   />
-
-    // };
-
-    // const showGuestCount3 = (event_id, name) => {
-      
-
-    //   <RSVP
-    //             content={<>
-    //               <p className="Event-count">Number of Attending Guests:</p>
-    //               <form onSubmit={popupSubmit}>
-    //               <label>attending
-    //                   <input type="integer" name="number_attending" defaultValue={mydata.message[1].members} maxLength="2" value={numberAttendingEvent2} onChange={e => setNumberAttendingEvent2(e.target.value)} />
-    //               </label>
-    //                 <input className="Submit-button" type="submit" value="Submit" />
-    //               </form>
-    //             </>}
-              
-    //   />
-
-    // };
-
-
-
-   // Hi hani, here what I'm trying to do is load up all the different events. We could do this with hardcoded as we know the number of events (but would rather make it dynamic)
-      // We want to load the events and have a switch toggle with each of them. If the toggle is on, then we want to call `showGuestCount` and load that RSVP form right underneath - I'm having difficulty passing any data or action to that as it results
-      // `Error: Too many re-renders. React limits the number of renders to prevent an infinite loop. on line 15:         setMyData(data);. I'm guessing because we're changing the state here, it's continoussly changing state and freaking out.
-      //setIsAttending(attending)
     return (
         <div className="invitation">
         {
@@ -241,8 +198,6 @@ const notAttending = async (e) => {
                 />
                 }
 
-                
-
                   <div>
                   <h2 className="event-header"> {mydata.message[1].event_name}</h2>
                   <p className="event-detail">{mydata.message[1].venue}</p>
@@ -255,7 +210,6 @@ const notAttending = async (e) => {
                     </label>
                   </div>
                 </div>
-
 
                 {isAttendingEvent2 && <Rsvp
                 content={<>
@@ -294,7 +248,6 @@ const notAttending = async (e) => {
                 />
                 }
 
-
                 {!isAttendingEvent1 && !isAttendingEvent2 && !isAttendingEvent3 && <Rsvp
                 content={<>
                   <form onSubmit={notAttending}>
@@ -304,24 +257,6 @@ const notAttending = async (e) => {
               
                 />
                 }
-                            
-               {/* {mydata.message.map((familyEvent) => (
-                    <div>
-                      <h2 className="event-header"> {familyEvent.event_name}</h2>
-                      <p className="event-detail">{familyEvent.venue}</p>
-                      <div className="event-toggle">
-                        <p className="event-toggle-name"> Will you be coming? </p>
-                        <label class="switch switch-left-right">
-                        <input class="switch-input" type="checkbox" checked={checked} onChange={setChecked} />
-                        <span class="switch-label" data-on="Accept" data-off="Decline"></span>
-                        <span class="switch-handle"></span>
-                        </label>
-                      </div>
-                    </div>
-
-                ))} */}
-
-
 
              </>
              : <> </>
