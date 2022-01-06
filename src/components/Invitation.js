@@ -14,7 +14,6 @@ const Invitation = (props) => {
     const [isAttendingSangeet, setisAttendingSangeet] = useState(false);
 
     const [eventId, setEventID] = useState(0);
-    const [rsvpData, setRsvpData] = useState(null);
     const [submittedEvent1, setSubmittedEvent1] = useState(false);
     const [submittedEvent2, setSubmittedEvent2] = useState(false);
     const [submittedEvent3, setSubmittedEvent3] = useState(false);
@@ -74,22 +73,22 @@ const finishedSubmit = async (e) => {
           body: JSON.stringify(),
       }
 
-      console.log("Submitting response for event 1 with", numberAttendingReception);
-      var response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingReception, requestOptions)
+      console.log("Submitting response for reception with", numberAttendingReception);
+      var response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingReception, requestOptions)
       var rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
       }
 
-      console.log("Submitting response for event 2 with", numberAttendingCeremony);
+      console.log("Submitting response for ceremony with", numberAttendingCeremony);
       response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingCeremony, requestOptions)
       rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
       }
 
-      console.log("Submitting response for event 3 with", numberAttendingSangeet);
-      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingSangeet, requestOptions)
+      console.log("Submitting response for sangeet with", numberAttendingSangeet);
+      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingSangeet, requestOptions)
       rsvpData = await response.json();
       if (response.status!==200 && response.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
@@ -114,6 +113,7 @@ const finishedSubmit = async (e) => {
     };
 
     const previouslyAttendingReception = () => {
+      console.log("Number attending for reception is", mydata.message[2].attending)
       if(mydata.message[2].attending > 0) {
        setIsAttendingReception(!isAttendingReception)
        return true
@@ -126,6 +126,7 @@ const finishedSubmit = async (e) => {
     };
 
     const previouslyAttendingCeremony = () => {
+      console.log("Number attending for ceremony is", mydata.message[1].attending)
       if(mydata.message[1].attending > 0) {
        setIsAttendingCeremony(!isAttendingCeremony)
        return true
@@ -137,7 +138,8 @@ const finishedSubmit = async (e) => {
     };
 
     const previouslyAttendingSangeet = () => {
-       if(mydata.message[0].attending > 0) {
+      console.log("Number attending for sangeet is", mydata.message[0].attending)
+       if(mydata.message[0].attending > 1) {
         setisAttendingSangeet(!isAttendingSangeet)
         return true
        }
