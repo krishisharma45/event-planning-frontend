@@ -15,7 +15,7 @@ var (
 	httpClientError              = 400
 	httpServerError              = 500
 	ErrTemplateGetFamily         = "Unexpected error retrieving a family"
-	ErrTemplateGetFamilyEvents   = "SQL failure while retrieving events for family. Family id is: %s"
+	ErrTemplateGetFamilyEvents   = "SQL failure while retrieving events for family. Family id is: %d"
 	ErrTemplateAddFamily         = "SQL failure while adding family. Family name is: %s"
 	ErrTemplateAttendingCount    = "SQL failure while retrieving number attending. Event id is %s"
 	ErrTemplateRSVPClient        = "Invalid operation! User tried to enter in attending number more than family members %s"
@@ -274,6 +274,36 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 		"Content-Type": "application/json",
 		"message":      true,
 	})
+}
+
+func (app *application) declineEvents(c *gin.Context) {
+	familyID, err := validateId(c.Params.ByName("family_id"))
+	if err != nil {
+		c.JSON(httpClientError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "Invalid family id",
+			"error":        err.Error(),
+		})
+		return
+	}
+	app.logger.Printf("Family ID is: %d", familyID)
+	app.logger.Printf("Declining all events")
+
+	eventsAffected, err := app.models.DB.DeclineAllEvents(familyID, -1)
+	if err != nil {
+		app.logger.Printf("Something went wrong with sql query to update declination for family_id: %d %s", familyID, err)
+		c.JSON(httpServerError, gin.H{
+			"Content-Type": "application/json",
+			"message":      fmt.Sprintf(ErrTemplateGetFamilyEvents, familyID),
+		})
+		return
+	}
+	app.logger.Printf("Updated declination for family id: %d for: %d events.", familyID, eventsAffected)
+	c.JSON(httpSuccess, gin.H{
+		"Content-Type": "application/json",
+		"message":      eventsAffected,
+	})
+	return
 }
 
 // func (app *application) addFamily(c *gin.Context) {

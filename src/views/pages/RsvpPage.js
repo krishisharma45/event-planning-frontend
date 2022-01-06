@@ -2,25 +2,30 @@ import 'styles/Rsvp.css';
 import 'styles/Popup.css';
 import React, {useState } from 'react';
 import Popup from 'components/Popup';
-//import InvitationPage from 'views/pages/InvitationPage';
-import InvitationPage from './InvitationPage';
+import Invitation from 'components/Invitation';
+const dotenv = require("dotenv");
 
 
 function RsvpPage(props) {
-  console.log(props);
-  //const {familyName, secretCode} = this.state
-    // if(!isValidated) {
-    //   //load up invitationpage
-    // } else {
-
-    // }
+    console.log(props);
     const [familyName, setFamilyName] = useState("")
     const [familyID, setFamilyIDN] = useState(0)
     const [secretCode, setSecretCode] = useState(0)
     const [errors, setErrors] = useState([])
     const [validated, setValidated] = useState(false)
-    // const history = useHistory()
     const [isOpen, setIsOpen] = useState(false);
+
+    const env = () => {
+        if (process.env.REACT_APP_ENV==="dev") {
+          console.log("Development environment running...")
+          return "http://localhost:59000"
+        }
+
+        else {
+          console.log("Production environment running...")
+          return "http://luvandkrishi.com"
+        }
+    }
 
     const togglePopup = () => {
       setIsOpen(!isOpen);
@@ -28,6 +33,7 @@ function RsvpPage(props) {
 
     const popupSubmit = (e) => {
         e.preventDefault();
+        console.log(env())
         if (familyName === "") {
           errors.push("Hi! Seems you haven't entered in a family name, please check your instructions for this information & try again");
         }
@@ -41,21 +47,10 @@ function RsvpPage(props) {
           return false;
         }
 
-        // const data = new FormData(e.target);
-        // const payload = Object.fromEntries(data.entries());
-    
-        // const requestOptions = {
-        //     method: "POST",
-        //     headers: {
-        //       'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(payload),
-        // }
-        //alert(requestOptions)
-        fetch("http://localhost:59000/v1/validate/" + secretCode + "/" + familyName)
+        fetch(env() + "/v1/validate/" + secretCode + "/" + familyName)
         .then((response) => {
           if (response.status !== 200 && response.status !== 400) {
-            alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!")
+            alert("Hi! Something seems to be off on our end, please email luvandkrishi@gmail.com!")
           }
           return response.json();
         })
@@ -68,7 +63,6 @@ function RsvpPage(props) {
 
           } else if (data.valid === false) {
             alert("Oops, your code and family name don't seem to match up. Please check your instructions for this information & try again");
-              //setAlert({type: "alert-danger", message: "Invalid login" });
           } else {
             alert("Success! Logging in");
 
@@ -76,11 +70,6 @@ function RsvpPage(props) {
             console.log(data.familyID)
             setFamilyIDN(data.familyID)
             togglePopup()
-            // save state to data.familyID
-            // return validated ===
-              // handleJWTChange(Object.values(data)[0]);
-              // window.localStorage.setItem("jwt", JSON.stringify(Object.values(data)[0]));
-            // history.push("/invitation");
           }
       })
       .catch(error => 
@@ -94,7 +83,7 @@ function RsvpPage(props) {
           <div className="invitation-container">
             {
             validated && familyID ?
-            <InvitationPage familyID={familyID}/> :
+            <Invitation familyID={familyID}/> :
             <>
               <div className="Rsvp-page">
                 <p className="Rsvp-intro">Welcome to the <span className="Rsvp-word">RSVP</span> portal!</p>

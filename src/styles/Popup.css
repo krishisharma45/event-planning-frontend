@@ -125,6 +125,24 @@ input {
   font-weight: bold;
 }
 
+.Submit-button {
+  width: auto;
+  font-family: 'OpenSans-Light';
+  font-size: 1em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding-bottom: 0.7em;
+  padding-top: 0.7em;
+  padding-right: 0.9em;
+  padding-left: 0.9em;
+  background-color: #E88DAB;
+  border: none;
+  border-radius: 0.2em;
+  box-shadow: -0.2em 0.2em 0.5em #030E2A;
+  color: #030E2A;
+  font-weight: bold;
+}
+
 .box {
   background: #F0C2D1;
 }

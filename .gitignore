@@ -18,8 +18,10 @@ yarn-error.log*
 
 .env
 .idea/
+.vscode/
 venv/
 scratch/
+docs/
 postgres-data/
 
 **/.terraform/*

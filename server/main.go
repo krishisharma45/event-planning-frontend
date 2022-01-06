@@ -45,7 +45,9 @@ type application struct {
 func main() {
 	var cfg config
 	flag.IntVar(&cfg.port, "port", 8080, "Server port to listen on")
-	flag.StringVar(&cfg.env, "env", "development", "Application environment")
+	flag.StringVar(&cfg.env, "env", getEnvironment(), "Application environment")
+	fmt.Println("Application Environment is: %s", getEnvironment())
+	flag.StringVar(&cfg.corsEndpoint, "cors_endpoint", getEnvironmentEndpoint(cfg.env), "Cors Endpoint")
 	secretData, err := getSecretFromAws()
 	connectionString := getDsn(secretData)
 	fmt.Println(connectionString)
