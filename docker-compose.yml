@@ -29,5 +29,6 @@ services:
     environment:
       - AWS_ACCESS_KEY
       - AWS_SECRET_KEY
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - '5432:5432'
