@@ -7,20 +7,20 @@ function EventPage() {
             <h1 className="First-event">meet + greet</h1>
             <p className="Event-title">CHOPTANK BALLROOM</p>
             <p>7 pm - 8 pm</p>
-            <p className="Last-event-info">mingle and enjoy dinner</p>
+            <p className="Last-event-info">mingle and enjoy appetizers</p>
             <h1 className="First-event">jaggo</h1>
             <p className="Event-title">CHOPTANK BALLROOM</p>
             <p>8 pm - 9 pm</p>
-            <p className="Last-event-info">a ritual to stay up all night + dance</p>
+            <p className="Last-event-info">a Punjabi ritual, meaning "to awake"</p>
             <h1 className="First-event">sangeet</h1>
             <p className="Event-title">CHOPTANK BALLROOM</p>
             <p>9 pm - 11 pm</p>
-            <p className="Last-event-info">performances for the bride + groom </p>
+            <p className="Last-event-info">singing, dancing and dinner </p>
             <p className="Event-date">SATURDAY, APRIL 23</p>
             <h1 className="First-event">lunch</h1>
             <p className="Event-title">REGATTA PAVILION</p>
             <p>12 pm - 1 pm</p>
-            <p className="Event-info">light lunch is served</p>
+            <p className="Event-info">enjoy lunch before the festivities</p>
             <h1>baraat</h1>
             <p className="Event-title">OYSTER SHELL PATH</p>
             <p>3 pm - 4 pm</p>

@@ -24,16 +24,10 @@ function FaqPage() {
 
                 <a id="coronavirus"><h1> coronavirus </h1></a>
                 <h3 className="Faq-question"> what coronavirus precautions are in place? </h3>
-                <p className="Faq-answer"> We will have hand sanitizer stations near all events, and will work with vendors to ensure they follow the COVID protocols that are recommended by the CDC at the time of the event. </p>
+                <p className="Faq-answer"> We will follow the COVID protocols that are recommended by the CDC at the time of the event. </p>
 
                 <h3 className="Faq-question"> how will changes to the schedule be communicated before the ceremony? </h3>
                 <p className="Faq-answer"> We plan to communicate any changes to the schedule through this website and via email. </p>
-
-                <h3 className="Faq-question"> are we required to wear masks during the ceremony and reception? </h3>
-                <p className="Faq-answer"> As of right now, we are not planning on requiring masks. This may change as we get closer to the event date, so please keep in mind that this answer may change. </p>
-
-                <h3 className="Faq-question"> are we required to have a negative test result for coronavirus to attend? </h3>
-                <p className="Faq-answer"> We do not plan to require testing from our guests, however we do recommend staying home (and updating your response using the rsvp page) if you are experiencing symptoms the week of the event date. </p>
 
                 <h3 className="Faq-question"> are we required to have partial or full coronavirus vaccination? </h3>
                 <p className="Faq-answer"> For the safety and comfort of all our guests, we respectfully request guests who are eligible for coronavirus vaccinations to get fully vaccinated and boosted. </p>
