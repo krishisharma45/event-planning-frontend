@@ -105,6 +105,9 @@ const finishedSubmit = async (e) => {
         if (httpResponse.status!==200 && httpResponse.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
         }
+        if (httpResponse === 200) {
+          alert("Thanks for submitting your response We're sad to see that you won't be coming!")
+        }
       }
       
       // Woohoo! User is coming to at least one event, let's submit their response
