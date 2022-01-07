@@ -2,10 +2,6 @@ import 'styles/Invitation.css';
 import React, {useEffect, useState } from 'react';
 import Rsvp from 'components/Rsvp';
 
-// Hi hani, I want the flow to be -> once auth'd in, load up the events for that family (loadEvents)
-// Load the X number of events and for each of them, gather a response if they'll be attending or not.
-// If attending an event, gather number of people attending that particular event id
-// On submit of that form, send a put request for that particular event id with those particular number of people attending
 
 const Invitation = (props) => {
     const [mydata, setMyData] = useState(null);
@@ -26,13 +22,21 @@ const Invitation = (props) => {
     const [numberChildrenAttendingCeremony, setNumberChildrenAttendingCeremony] = useState(0)
     const [numberChildrenAttendingSangeet, setNumberChildrenAttendingSangeet] = useState(0)
 
+    const env = () => {
+        if (process.env.REACT_APP_ENV==="dev") {
+          console.log("Development environment running...")
+          return "http://localhost:59000"
+        }
 
+        else {
+          console.log("Production environment running...")
+          return "http://luvandkrishi.com"
+        }
+    }
 
-
-    // loadEvents will load up the events for that family
     const loadEvents = async () => {
       try{
-        const response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID);
+        const response = await fetch(env() + "/v1/family/events/" + props.familyID);
         const data = await response.json();
         setMyData(data);
         if (response.status !== 200 && response.status !== 400) {
