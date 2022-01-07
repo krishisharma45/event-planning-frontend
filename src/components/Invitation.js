@@ -7,14 +7,7 @@ const Invitation = (props) => {
     const [mydata, setMyData] = useState(null);
     const [isAttendingReception, setIsAttendingReception] = useState(false);
     const [isAttendingCeremony, setIsAttendingCeremony] = useState(false);
-    const [isAttendingSangeet, setisAttendingSangeet] = useState(false);
-
-    const [eventId, setEventID] = useState(0);
-    const [submittedEvent1, setSubmittedEvent1] = useState(false);
-    const [submittedEvent2, setSubmittedEvent2] = useState(false);
-    const [submittedEvent3, setSubmittedEvent3] = useState(false);
-
-
+    const [isAttendingSangeet, setIsAttendingSangeet] = useState(false);
     const [numberAttendingReception, setNumberAttendingReception] = useState(0)
     const [numberAttendingCeremony, setNumberAttendingCeremony] = useState(0)
     const [numberAttendingSangeet, setNumberAttendingSangeet] = useState(0)
@@ -22,6 +15,8 @@ const Invitation = (props) => {
     const [numberChildrenAttendingCeremony, setNumberChildrenAttendingCeremony] = useState(0)
     const [numberChildrenAttendingSangeet, setNumberChildrenAttendingSangeet] = useState(0)
 
+
+// this will guide our api's to whether we are in development or production
     const env = () => {
         if (process.env.REACT_APP_ENV==="dev") {
           console.log("Development environment running...")
@@ -39,6 +34,19 @@ const Invitation = (props) => {
         const response = await fetch(env() + "/v1/family/events/" + props.familyID);
         const data = await response.json();
         setMyData(data);
+        // hi reader, this is to ensure that the result from last time triggers the appropriate "status" of the user
+        if(data.message[0].attending > 0) {
+          attendingSangeet()
+        }
+        if(data.message[1].attending > 0) {
+          attendingCeremony()
+        }
+        if(data.message[2].attending > 0) {
+          attendingReception()
+        }
+        // checkPreviousResponseSangeet(data.message[0])
+        // checkPreviousResponseCeremony(data.message[1])
+        // checkPreviousResponseReception(data.message[2])
         if (response.status !== 200 && response.status !== 400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!")
         }
@@ -68,46 +76,112 @@ const finishedSubmit = async (e) => {
   try {
     if (!isAttendingReception) {
       setNumberAttendingReception(0)
+      setNumberChildrenAttendingReception(0)
     }
     if (!isAttendingCeremony) {
       setNumberAttendingCeremony(0)
+      setNumberChildrenAttendingCeremony(0)
     }
     if (!isAttendingSangeet) {
       setNumberAttendingSangeet(0)
+      setNumberChildrenAttendingSangeet(0)
     }
+    var userErrorCount = 0
+    var httpResponse
+    var eventResponse
+    console.log("hey look here with the sangeet numbers", numberAttendingSangeet)
+    console.log("hey look here with the ceremony numbers", numberAttendingCeremony)
+    console.log("hey look here with the reception numbers", numberAttendingReception)
       const requestOptions = {
           method: "PUT",
           body: JSON.stringify(),
       }
 
-      console.log("Submitting response for reception with", numberAttendingReception);
-      var response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingReception + "/" + numberChildrenAttendingReception, requestOptions)
-      var rsvpData = await response.json();
-      if (response.status!==200 && response.status!==400) {
+      // User is not coming to any events :(
+      if (!isAttendingSangeet && !isAttendingCeremony && !isAttendingReception) {
+        console.log("User is not coming to any event")
+        httpResponse = await fetch(env() + "/v1/family/events/decline/" + props.familyID, requestOptions)
+        eventResponse = await httpResponse.json();
+        if (httpResponse.status!==200 && httpResponse.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+        }
+      }
+      
+      // Woohoo! User is coming to at least one event, let's submit their response
+      else {
+      if (isAttendingSangeet && mydata.message[0].attending > 0 && numberAttendingSangeet === 0){
+        //Do nothing since this means they were previously attending, and they're not changing it. This is a weird react thing, do not do call
+        console.log("buggy")
+      } else {
+        // Submit sangeet and check if user messed up
+          console.log("Submitting response for sangeet with", numberAttendingSangeet);
+          httpResponse = await fetch(env() + "/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingSangeet + "/" + numberChildrenAttendingSangeet, requestOptions)
+          eventResponse = await httpResponse.json();
+          if (httpResponse.status!==200 && httpResponse.status!==400) {
+            alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+          }
+          if (httpResponse.status === 400) {
+            userErrorCount = userErrorCount + 1
+          }
       }
 
-      console.log("Submitting response for ceremony with", numberAttendingCeremony);
-      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingCeremony + "/" + numberChildrenAttendingCeremony, requestOptions)
-      rsvpData = await response.json();
-      if (response.status!==200 && response.status!==400) {
-          alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+      
+      if (isAttendingCeremony && mydata.message[1].attending > 0 && numberAttendingCeremony === 0){
+        //Do nothing since this means they were previously attending, and they're not changing it. This is a weird react thing, do not do call
+        console.log("buggy ceremony")
+      } else {
+        // Submit ceremony and check if user messed up
+          console.log("Submitting response for ceremony with", numberAttendingCeremony);
+          httpResponse = await fetch(env() + "/v1/family/events/" + props.familyID + "/" + 2 + "/" + numberAttendingCeremony + "/" + numberChildrenAttendingCeremony, requestOptions)
+          eventResponse = await httpResponse.json();
+          if (httpResponse.status!==200 && httpResponse.status!==400) {
+              alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+          }
+          if (httpResponse.status === 400) {
+            userErrorCount = userErrorCount + 1
+          }
       }
 
-      console.log("Submitting response for sangeet with", numberAttendingSangeet);
-      response = await fetch("http://luvandkrishi.com/v1/family/events/" + props.familyID + "/" + 1 + "/" + numberAttendingSangeet + "/" + numberChildrenAttendingSangeet, requestOptions)
-      rsvpData = await response.json();
-      if (response.status!==200 && response.status!==400) {
-          alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+      if (isAttendingReception && mydata.message[2].attending > 0 && numberAttendingReception === 0){
+        //Do nothing since this means they were previously attending, and they're not changing it. This is a weird react thing, do not do call
+        console.log("buggy reception")
+      } else {
+        // Submit ceremony and check if user messed up
+          console.log("Submitting response for reception with", numberAttendingReception);
+          httpResponse = await fetch(env() + "/v1/family/events/" + props.familyID + "/" + 3 + "/" + numberAttendingReception + "/" + numberChildrenAttendingReception, requestOptions)
+          eventResponse = await httpResponse.json();
+          if (httpResponse.status!==200 && httpResponse.status!==400) {
+              alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
+          }
+          if (httpResponse.status === 400) {
+            userErrorCount = userErrorCount + 1
+          }
       }
 
-      console.log("submitted rsvp for all events")
-      setSubmittedEvent1(true)
-      setSubmittedEvent2(true)
-      setSubmittedEvent3(true)
-      alert("Thank you for your response You can now exit this page - Thank you!")
-      return rsvpData.message
-  } catch {
+      console.log("Returned was", eventResponse)
+
+      // User has messed up on all 3 with user errors. Friendly message w/ guide
+      if (httpResponse.status === 400 && userErrorCount >= 3) {
+        alert("Hi there, this is Luv.\n You may not understand how this RSVP works.\n Allow me to be your virgil through this dark forest\n\n" +  
+        "If you'd like to attend an event, press the Yes or No for the corresponding event.\n If you're attending, you should see a prompt asking how many members of your party there will be in total, and how many children.\n" +
+        " (Note: if you really are bringing more children than adults to all 3 events and not just testing, you should give us a call ;)).\n When you're done, press submit! We'll save your responses for the next time you come around or change your mind!")
+      }
+
+      // User has messed up on a response, show them error
+      if (httpResponse.status === 400 && userErrorCount < 3) {
+        alert(eventResponse.message)
+      }
+
+      // We're done!
+      if (httpResponse.status === 200 && userErrorCount === 0) {
+        console.log("submitted rsvp for all events successfully")
+        alert("Thank you for your response! You can now exit this page - Thank you!")
+      }
+    }
+
+  } catch (error){
+    alert("Oops, something weird seems to have happened here. We apologize! Please call us immediately @ 310-415-6274")
+    console.log(error)
   }
 };
 
@@ -119,39 +193,17 @@ const finishedSubmit = async (e) => {
       setIsAttendingReception(!isAttendingReception)
     };
 
-    const previouslyAttendingReception = () => {
-      console.log("Number attending for reception is", mydata.message[2].attending)
-      if(mydata.message[2].attending > 0) {
-       setIsAttendingReception(!isAttendingReception)
-       return true
-      }
-   }
 
 
     const attendingCeremony = () => {
       setIsAttendingCeremony(!isAttendingCeremony)
     };
 
-    const previouslyAttendingCeremony = () => {
-      console.log("Number attending for ceremony is", mydata.message[1].attending)
-      if(mydata.message[1].attending > 0) {
-       setIsAttendingCeremony(!isAttendingCeremony)
-       return true
-      }
-   }
 
     const attendingSangeet = () => {
-      setisAttendingSangeet(!isAttendingSangeet)
+      setIsAttendingSangeet(!isAttendingSangeet)
     };
 
-    const previouslyAttendingSangeet = () => {
-      console.log("Number attending for sangeet is", mydata.message[0].attending)
-       if(mydata.message[0].attending > 1) {
-        setisAttendingSangeet(!isAttendingSangeet)
-        return true
-       }
-    }
-    
 
    
    // load up all the different events. We could do this with hardcoded as we know the number of events (but would rather make it dynamic)
@@ -171,7 +223,7 @@ const finishedSubmit = async (e) => {
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" defaultChecked={previouslyAttendingSangeet} onChange={attendingSangeet} />
+                    <input class="switch-input" type="checkbox" checked={isAttendingSangeet} onChange={attendingSangeet} />
                     <span class="switch-label" data-on="Yes" data-off="No"></span>
                     <span class="switch-handle"></span>
                     </label>
@@ -181,7 +233,7 @@ const finishedSubmit = async (e) => {
                 {isAttendingSangeet && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Total Attending Guests:</p>
-                  <input type="integer" name="number_attending_sangeet" defaultValue={mydata.message[0].attending} maxLength="2"  onChange={e =>  { setNumberAttendingSangeet(e.target.value); setEventID(3)}} />
+                  <input type="integer" name="number_attending_sangeet" defaultValue={mydata.message[0].attending} maxLength="2"  onChange={e =>  { setNumberAttendingSangeet(e.target.value)}} />
                   <p className="Event-count">Number of Attending Children (Under 12):</p>
                   <input type="integer" name="children_attending_sangeet" defaultValue={mydata.message[0].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingSangeet(e.target.value)}} />
                 </>}
@@ -196,7 +248,7 @@ const finishedSubmit = async (e) => {
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" defaultChecked={previouslyAttendingCeremony} onChange={attendingCeremony} />
+                    <input class="switch-input" type="checkbox" checked={isAttendingCeremony} onChange={attendingCeremony} />
                     <span class="switch-label" data-on="Yes" data-off="No"></span>
                     <span class="switch-handle"></span>
                     </label>
@@ -207,7 +259,7 @@ const finishedSubmit = async (e) => {
                 {isAttendingCeremony && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Total Attending Guests:</p>
-                  <input type="integer" name="number_attending_ceremony" defaultValue={mydata.message[1].attending} maxLength="2"  onChange={e =>  { setNumberAttendingCeremony(e.target.value); setEventID(2)}} />
+                  <input type="integer" name="number_attending_ceremony" defaultValue={mydata.message[1].attending} maxLength="2"  onChange={e =>  { setNumberAttendingCeremony(e.target.value)}} />
                   <p className="Event-count">Number of Attending Children (Under 12):</p>
                   <input type="integer" name="children_attending_ceremony" defaultValue={mydata.message[1].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingCeremony(e.target.value)}} />
                 </>}
@@ -223,7 +275,7 @@ const finishedSubmit = async (e) => {
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" defaultChecked={previouslyAttendingReception} onChange={attendingReception} />
+                    <input class="switch-input" type="checkbox" checked={isAttendingReception} onChange={attendingReception} />
                     <span class="switch-label" data-on="Yes" data-off="No"></span>
                     <span class="switch-handle"></span>
                     </label>
@@ -233,7 +285,7 @@ const finishedSubmit = async (e) => {
                 {isAttendingReception && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Total Attending Guests:</p>
-                  <input type="integer" name="number_attending_reception" defaultValue={mydata.message[2].attending} maxLength="2"  onChange={e => {setNumberAttendingReception(e.target.value); setEventID(1)}} />
+                  <input type="integer" name="number_attending_reception" defaultValue={mydata.message[2].attending} maxLength="2"  onChange={e => {setNumberAttendingReception(e.target.value)}} />
                   <p className="Event-count">Number of Attending Children (Under 12):</p>
                   <input type="integer" name="children_attending_reception" defaultValue={mydata.message[2].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingReception(e.target.value)}} />
                 </>}

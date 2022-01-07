@@ -163,7 +163,7 @@ func (m *DBModel) DeclineAllEvents(id int, constDecline int) (int, error) {
 	defer cancel()
 	updatedTime := time.Now()
 
-	query := `update family_events set attending = $2, updated_at = $3 where family_id = $1`
+	query := `update family_events set attending = $2, attending_children = $2, updated_at = $3 where family_id = $1`
 	rows, err := m.DB.ExecContext(ctx, query, id, constDecline, updatedTime)
 	count, err := rows.RowsAffected()
 
