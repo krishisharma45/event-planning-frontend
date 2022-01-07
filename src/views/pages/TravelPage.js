@@ -9,6 +9,7 @@ import { BiBus } from 'react-icons/bi';
 
 function TravelPage() {
     return (
+        <div className="wrapper">
         <div className="Travel">
             <h1> transportation </h1>
             <div className="Travel-options">
@@ -16,7 +17,7 @@ function TravelPage() {
                 <div className="Lodging-icons">
                     <div className="Travel-description">
                         <a href="https://www.google.com/maps/place/Hyatt+Regency+Chesapeake+Bay+Golf+Resort,+Spa+And+Marina/@38.5620367,-76.0505784,17z/data=!3m1!4b1!4m8!3m7!1s0x89b84a28f884d4eb:0xad1fa151cf8ce6eb!5m2!4m1!1i2!8m2!3d38.5620367!4d-76.0483897" className="LodgingIcon"><FaCarAlt size={45}/>
-                        <p className="Hotel-distance">Hot Wheels</p>
+                        <p className="Hotel-distance">Car</p>
                         <p>DC: 1.5 hr</p>
                         <p>Philly: 2.25 hr</p>
                         <p>Cleveland: 7 hr</p></a>
@@ -30,9 +31,9 @@ function TravelPage() {
                     </div>
                     <div className="Travel-description">
                         <a href="https://www.greyhound.com/en-us/bus-to-baltimore" className="lastTravelIcon"><BiBus size={45}/>
-                        <p className="Hotel-distance">Greyhound</p>
-                        <p>Venue: 2.2 mi</p>
-                        <p>BWI: 84 mi</p>
+                        <p className="Hotel-distance">Bus</p>
+                        <p>Cambridge: 2.2 mi</p>
+                        <p>Baltimore: 84 mi</p>
                         <p>DC: 86 mi</p></a>
                     </div>
                 </div>
@@ -64,6 +65,7 @@ function TravelPage() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 };

@@ -3,7 +3,6 @@ import 'styles/Popup.css';
 import React, {useState } from 'react';
 import Popup from 'components/Popup';
 import Invitation from 'components/Invitation';
-const dotenv = require("dotenv");
 
 
 function RsvpPage(props) {
@@ -78,7 +77,7 @@ function RsvpPage(props) {
     }
 
     return (
-      <div>
+      <div className="wrapper">
           
           <div className="invitation-container">
             {
@@ -87,7 +86,7 @@ function RsvpPage(props) {
             <>
               <div className="Rsvp-page">
                 <p className="Rsvp-intro">Welcome to the <span className="Rsvp-word">RSVP</span> portal!</p>
-                <p className="Rsvp-info">Use your last name + code from the invitation to get to the RSVP form. Should your plans change, you can update your RSVP using the same code + form.</p>
+                <p className="Rsvp-info">Use your last name + code from the invitation to get to the RSVP form. Should your plans change, you can update your RSVP using the same code and form.</p>
               <input
                 className="Rsvp-button"
                 type="button"
@@ -101,10 +100,10 @@ function RsvpPage(props) {
                   <p className="Popup-title">guest check in</p>
                   <form onSubmit={popupSubmit}>
                     <label>last name
-                      <input type="text" name="last name" defaultValue="" value={familyName} onChange={e => setFamilyName(e.target.value)} />
+                      <input type="text" name="last name" value={familyName} onChange={e => setFamilyName(e.target.value)} />
                     </label>
                     <label>guest code
-                      <input type="integer" name="guest code" defaultValue="" maxLength="4" value={secretCode} onChange={e => setSecretCode(e.target.value)} />
+                      <input type="integer" name="guest code" maxLength="4" value={secretCode} onChange={e => setSecretCode(e.target.value)} />
                     </label>
                     <input className="Popup-button" type="submit" value="check in" />
                   </form>
