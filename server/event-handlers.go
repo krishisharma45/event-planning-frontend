@@ -241,20 +241,20 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 		return
 	}
 	attending, err := validateAttending(c.Params.ByName("attending"))
-	if err != nil || attending < 0 {
+	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Hi family! The number of people attending seems to be wrong with the number of people attending at least one of the events in your family. Remember, ths is total people in party. Try again!",
+			"message":      "Hi family! The number of people attending seems to be incorrectly inputted with at least one of the events in your family. Remember, ths is total people in party. Try again!",
 			"error":        err.Error(),
 		})
 		return
 	}
 
 	attendingChildren, err := validateAttending(c.Params.ByName("attending_children"))
-	if err != nil || attendingChildren < 0 {
+	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Hi family! The number of people attending seems to be wrong with the number of children attending at least one of the events in your family. Try again!",
+			"message":      "Hi family! The number of children attending seems to be incorrectly inputter with at least one of the events in your family. Try again!",
 			"error":        err.Error(),
 		})
 		return
@@ -271,10 +271,23 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 	}
 
 	//check attending vs number of members
-	// family, err := app.models.DB.GetFamilies(familyID)
-	// if attending > family.Members {
-
-	// }
+	family, err := app.models.DB.GetFamilies(familyID)
+	if err != nil {
+		c.JSON(httpServerError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "The familyID sent in is messed up to look up number attending. Should not appear",
+			"error":        err.Error(),
+		})
+		return
+	}
+	if attending > family.Members {
+		c.JSON(httpClientError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "Hi! It seems that you've entered in more people than we have listed in your party! If, this is true and you are bringing someone that we may not have accounted for, please contact us @luvandkrishi.com",
+			"error":        "User is bringing more people than they should",
+		})
+		return
+	}
 
 	app.logger.Printf("Family %d will have %d total people and %d children attending %d event id", familyID, attending, attendingChildren, eventID)
 

@@ -37,8 +37,12 @@ func validateFamilyName(familyName string) (string, error) {
 
 func validateAttending(attending string) (int, error) {
 	numAttending, err := strconv.Atoi(attending)
-	if numAttending <= 0 {
-		return 0, err
+	if err != nil {
+		return 0, errors.New("That doesn't look like a valid number of people attending")
+
+	}
+	if numAttending < 0 {
+		return 0, errors.New("Can't have a negative number of people attending")
 	}
 
 	return numAttending, nil

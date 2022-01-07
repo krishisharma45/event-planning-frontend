@@ -5,6 +5,7 @@ import Rsvp from 'components/Rsvp';
 
 const Invitation = (props) => {
     const [mydata, setMyData] = useState(null);
+    const [isFinished, setIsFinished] = useState(false);
     const [isAttendingReception, setIsAttendingReception] = useState(false);
     const [isAttendingCeremony, setIsAttendingCeremony] = useState(false);
     const [isAttendingSangeet, setIsAttendingSangeet] = useState(false);
@@ -89,9 +90,7 @@ const finishedSubmit = async (e) => {
     var userErrorCount = 0
     var httpResponse
     var eventResponse
-    console.log("hey look here with the sangeet numbers", numberAttendingSangeet)
-    console.log("hey look here with the ceremony numbers", numberAttendingCeremony)
-    console.log("hey look here with the reception numbers", numberAttendingReception)
+    var userMessage
       const requestOptions = {
           method: "PUT",
           body: JSON.stringify(),
@@ -105,7 +104,7 @@ const finishedSubmit = async (e) => {
         if (httpResponse.status!==200 && httpResponse.status!==400) {
           alert("Hi! Something seems to be off on our end, please email luvandkrishi.com!");
         }
-        if (httpResponse === 200) {
+        if (httpResponse.status === 200) {
           alert("Thanks for submitting your response We're sad to see that you won't be coming!")
         }
       }
@@ -125,7 +124,11 @@ const finishedSubmit = async (e) => {
           }
           if (httpResponse.status === 400) {
             userErrorCount = userErrorCount + 1
+            userMessage = eventResponse.message
           }
+          // if (httpResponse.status === 400 && userErrorCount < 3) {
+          //   alert(sangeetResponse.message)
+          // }
       }
 
       
@@ -142,7 +145,11 @@ const finishedSubmit = async (e) => {
           }
           if (httpResponse.status === 400) {
             userErrorCount = userErrorCount + 1
+            userMessage = eventResponse.message
           }
+          // if (httpResponse.status === 400 && userErrorCount < 3) {
+          //   alert(ceremonyResponse.message)
+          // }
       }
 
       if (isAttendingReception && mydata.message[2].attending > 0 && numberAttendingReception === 0){
@@ -158,22 +165,29 @@ const finishedSubmit = async (e) => {
           }
           if (httpResponse.status === 400) {
             userErrorCount = userErrorCount + 1
+            userMessage = eventResponse.message
           }
+          // if (httpResponse.status === 400 && userErrorCount < 3) {
+          //   alert(receptionResponse.message)
+          // }
       }
 
       console.log("Returned was", eventResponse)
 
-      // User has messed up on all 3 with user errors. Friendly message w/ guide
-      if (httpResponse.status === 400 && userErrorCount >= 3) {
-        alert("Hi there, this is Luv.\n You may not understand how this RSVP works.\n Allow me to be your virgil through this dark forest\n\n" +  
-        "If you'd like to attend an event, press the Yes or No for the corresponding event.\n If you're attending, you should see a prompt asking how many members of your party there will be in total, and how many children.\n" +
-        " (Note: if you really are bringing more children than adults to all 3 events and not just testing, you should give us a call ;)).\n When you're done, press submit! We'll save your responses for the next time you come around or change your mind!")
+      if (userErrorCount >= 1 && userErrorCount < 3) {
+        alert(userMessage)
       }
 
-      // User has messed up on a response, show them error
-      if (httpResponse.status === 400 && userErrorCount < 3) {
-        alert(eventResponse.message)
+      // User has messed up on all 3 with user errors. Friendly message w/ guide
+      if (httpResponse.status === 400 && userErrorCount >= 3) {
+        alert("Hi there, this is Luv.\n You may not understand how this RSVP works.\n Allow me to be your vigil through this dark forest\n\n" +  
+        "If you'd like to attend an event, press the Yes or No for the corresponding event.\n If you're attending, you should see a prompt asking how many members of your party there will be in total, and how many children.\n" +
+        "(Note: if you really are bringing more children than adults to all 3 events and not just testing, you should give us a call ;)).\n" +
+        "Please also note that we also have a count of people in each family. If you are bringing someone we are not anticipating, please email us.\n" +
+        "When you're done, press submit! We'll save your responses for the next time you come around or change your mind!")
       }
+
+
 
       // We're done!
       if (httpResponse.status === 200 && userErrorCount === 0) {
@@ -186,6 +200,7 @@ const finishedSubmit = async (e) => {
     alert("Oops, something weird seems to have happened here. We apologize! Please call us immediately @ 310-415-6274")
     console.log(error)
   }
+  // setIsFinished(!isFinished);
 };
 
 // check all 3 attending variables, render if all 3 are false -> send in -1 for all events
@@ -221,12 +236,13 @@ const finishedSubmit = async (e) => {
                <p className="invitation-info">Dear {mydata.message[0].family_name} family, we humbly request your presence at the following events. Please email us at luvandkrishi@gmail.com with any questions or comments.</p>
 
                <div>
+                  <p className="event-date">FRIDAY, APRIL 22</p>
                   <h2 className="event-header"> {mydata.message[0].event_name}</h2>
                   <p className="event-detail">{mydata.message[0].venue}</p>
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" checked={isAttendingSangeet} onChange={attendingSangeet} />
+                    <input className="switch-input" type="checkbox" checked={isAttendingSangeet} onChange={attendingSangeet} />
                     <span class="switch-label" data-on="Yes" data-off="No"></span>
                     <span class="switch-handle"></span>
                     </label>
@@ -236,9 +252,9 @@ const finishedSubmit = async (e) => {
                 {isAttendingSangeet && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Total Attending Guests:</p>
-                  <input type="integer" name="number_attending_sangeet" defaultValue={mydata.message[0].attending} maxLength="2"  onChange={e =>  { setNumberAttendingSangeet(e.target.value)}} />
+                  <input type="number" name="number_attending_sangeet" defaultValue={mydata.message[0].attending} maxLength="2"  onChange={e =>  { setNumberAttendingSangeet(e.target.value)}} />
                   <p className="Event-count">Number of Attending Children (Under 12):</p>
-                  <input type="integer" name="children_attending_sangeet" defaultValue={mydata.message[0].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingSangeet(e.target.value)}} />
+                  <input type="number" name="children_attending_sangeet" defaultValue={mydata.message[0].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingSangeet(e.target.value)}} />
                 </>}
               
                 />
@@ -246,12 +262,13 @@ const finishedSubmit = async (e) => {
                 
                 
                 <div>
+                  <p className="event-date">SATURDAY, APRIL 23</p>
                   <h2 className="event-header"> {mydata.message[1].event_name}</h2>
                   <p className="event-detail">{mydata.message[1].venue}</p>
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" checked={isAttendingCeremony} onChange={attendingCeremony} />
+                    <input className="switch-input" type="checkbox" checked={isAttendingCeremony} onChange={attendingCeremony} />
                     <span class="switch-label" data-on="Yes" data-off="No"></span>
                     <span class="switch-handle"></span>
                     </label>
@@ -262,9 +279,9 @@ const finishedSubmit = async (e) => {
                 {isAttendingCeremony && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Total Attending Guests:</p>
-                  <input type="integer" name="number_attending_ceremony" defaultValue={mydata.message[1].attending} maxLength="2"  onChange={e =>  { setNumberAttendingCeremony(e.target.value)}} />
+                  <input type="number" name="number_attending_ceremony" defaultValue={mydata.message[1].attending} maxLength="2"  onChange={e =>  { setNumberAttendingCeremony(e.target.value)}} />
                   <p className="Event-count">Number of Attending Children (Under 12):</p>
-                  <input type="integer" name="children_attending_ceremony" defaultValue={mydata.message[1].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingCeremony(e.target.value)}} />
+                  <input className="ceremony-count" type="number" name="children_attending_ceremony" defaultValue={mydata.message[1].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingCeremony(e.target.value)}} />
                 </>}
               
                 />
@@ -278,7 +295,7 @@ const finishedSubmit = async (e) => {
                   <div className="event-toggle">
                     <p className="event-toggle-name"> Will you be attending? </p>
                     <label class="switch switch-left-right">
-                    <input class="switch-input" type="checkbox" checked={isAttendingReception} onChange={attendingReception} />
+                    <input className="switch-input" type="checkbox" checked={isAttendingReception} onChange={attendingReception} />
                     <span class="switch-label" data-on="Yes" data-off="No"></span>
                     <span class="switch-handle"></span>
                     </label>
@@ -288,9 +305,9 @@ const finishedSubmit = async (e) => {
                 {isAttendingReception && <Rsvp
                 content={<>
                   <p className="Event-count">Number of Total Attending Guests:</p>
-                  <input type="integer" name="number_attending_reception" defaultValue={mydata.message[2].attending} maxLength="2"  onChange={e => {setNumberAttendingReception(e.target.value)}} />
+                  <input type="number" name="number_attending_reception" defaultValue={mydata.message[2].attending} maxLength="2"  onChange={e => {setNumberAttendingReception(e.target.value)}} />
                   <p className="Event-count">Number of Attending Children (Under 12):</p>
-                  <input type="integer" name="children_attending_reception" defaultValue={mydata.message[2].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingReception(e.target.value)}} />
+                  <input className="ceremony-count" type="number" name="children_attending_reception" defaultValue={mydata.message[2].attending_children} maxLength="2"  onChange={e => {setNumberChildrenAttendingReception(e.target.value)}} />
                 </>}
               
                 />
@@ -303,7 +320,7 @@ const finishedSubmit = async (e) => {
                 {<Rsvp
                 content={<>
                   <form onSubmit={finishedSubmit}>
-                  <input className="Submit-button" type="submit" value="Submit Response" />
+                  <input className="Submit-button" type="submit" value="Submit RSVP" />
                   </form>
                 </>}
               
