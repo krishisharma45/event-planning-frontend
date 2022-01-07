@@ -22,7 +22,7 @@ function RsvpPage(props) {
 
         else {
           console.log("Production environment running...")
-          return "http://luvandkrishi.com"
+          return "http://www.luvandkrishi.com"
         }
     }
 

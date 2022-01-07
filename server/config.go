@@ -16,11 +16,11 @@ import (
 )
 
 type config struct {
-	port int
-	env  string
+	port         int
+	env          string
 	corsEndpoint string
-	db   database
-	jwt  struct {
+	db           database
+	jwt          struct {
 		secret string
 	}
 }
@@ -100,17 +100,17 @@ func getDsn(secretData SecretData) string {
 }
 
 func getEnvironment() string {
-    if (goDotEnvVariable("REACT_APP_ENV")=="dev") {
-        return "development"
-    } else {
-        return "production"
-    }
+	if goDotEnvVariable("REACT_APP_ENV") == "dev" {
+		return "development"
+	} else {
+		return "production"
+	}
 }
 
 func getEnvironmentEndpoint(environment string) string {
-    if environment == "development" {
-        return "http://localhost:58000"
-    } else {
-        return "http://*.luvandkrishi.com"
-    }
+	if environment == "development" {
+		return "http://localhost:58000"
+	} else {
+		return "http://*.luvandkrishi.com"
+	}
 }
