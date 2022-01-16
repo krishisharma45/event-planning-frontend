@@ -26,7 +26,7 @@ const Invitation = (props) => {
 
         else {
           console.log("Production environment running...")
-          return "http://www.luvandkrishi.com"
+          return "https://www.luvandkrishi.com"
         }
     }
 
@@ -182,8 +182,8 @@ const finishedSubmit = async (e) => {
       if (httpResponse.status === 400 && userErrorCount >= 3) {
         alert("Hi there, this is Luv.\n You may not understand how this RSVP works.\n Allow me to be your vigil through this dark forest\n\n" +  
         "If you'd like to attend an event, press the Yes or No for the corresponding event.\n If you're attending, you should see a prompt asking how many members of your party there will be in total, and how many children.\n" +
-        "(Note: if you really are bringing more children than adults to all 3 events and not just testing, you should give us a call ;)).\n" +
-        "Please also note that we also have a count of people in each family. If you are bringing someone we are not anticipating, please email us.\n" +
+        "(Note: if you really are bringing more children than total people to all 3 events and not just testing, you should give us a call ;)).\n" +
+        "Please also note that we've done our best to estimate how many people are in your party. If you are bringing someone we are not anticipating, please email us.\n" +
         "When you're done, press submit! We'll save your responses for the next time you come around or change your mind!")
       }
 

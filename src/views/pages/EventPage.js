@@ -10,17 +10,17 @@ function EventPage() {
             <p className="Last-event-info">mingle and enjoy appetizers</p>
             <h1 className="First-event">jaggo</h1>
             <p className="Event-title">CHOPTANK BALLROOM</p>
-            <p>8 pm - 9 pm</p>
+            <p>8 pm - 8:30 pm</p>
             <p className="Last-event-info">a Punjabi ritual, meaning "to awake"</p>
             <h1 className="First-event">sangeet</h1>
             <p className="Event-title">CHOPTANK BALLROOM</p>
-            <p>9 pm - 11 pm</p>
+            <p>8:30 pm - 11 pm</p>
             <p className="Last-event-info">singing, dancing and dinner </p>
             <p className="Event-date">SATURDAY, APRIL 23</p>
-            <h1 className="First-event">lunch</h1>
+            <h1 className="First-event">brunch</h1>
             <p className="Event-title">REGATTA PAVILION</p>
-            <p>12 pm - 1 pm</p>
-            <p className="Event-info">enjoy lunch before the festivities</p>
+            <p>11 am - 1 pm</p>
+            <p className="Event-info">pre-ceremony Indian brunch</p>
             <h1>baraat</h1>
             <p className="Event-title">OYSTER SHELL PATH</p>
             <p>3 pm - 4 pm</p>

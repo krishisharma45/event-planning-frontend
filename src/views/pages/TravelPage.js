@@ -32,8 +32,8 @@ function TravelPage() {
                     <div className="Travel-description">
                         <a href="https://www.greyhound.com/en-us/bus-to-baltimore" className="lastTravelIcon"><BiBus size={45}/>
                         <p className="Hotel-distance">Bus</p>
-                        <p>Cambridge: 2.2 mi</p>
-                        <p>Baltimore: 84 mi</p>
+                        <p>Venue: 2.2 mi</p>
+                        <p>BWI: 84 mi</p>
                         <p>DC: 86 mi</p></a>
                     </div>
                 </div>

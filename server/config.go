@@ -111,6 +111,6 @@ func getEnvironmentEndpoint(environment string) string {
 	if environment == "development" {
 		return "http://localhost:58000"
 	} else {
-		return "http://*.luvandkrishi.com"
+		return "https://luvandkrishi.com"
 	}
 }

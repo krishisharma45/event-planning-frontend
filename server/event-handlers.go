@@ -226,7 +226,7 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 	if err != nil {
 		c.JSON(httpServerError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "The event ID sent in is messed up. Should not appear",
+			"message":      "The family ID sent in is messed up. Should not appear",
 			"error":        err.Error(),
 		})
 		return
@@ -254,7 +254,7 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Hi family! The number of children attending seems to be incorrectly inputter with at least one of the events in your family. Try again!",
+			"message":      "Hi family! The number of children attending seems to be incorrectly inputted with at least one of the events in your family. Try again!",
 			"error":        err.Error(),
 		})
 		return
@@ -264,7 +264,7 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 	if attendingChildren > attending {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Hi! It seems that you've entered in more children than adults in your party for one of the events! If, this is true, please contact us @luvandkrishi.com",
+			"message":      "Hi! It seems that you've entered in more children than adults in your party for one of the events! If this is true, please contact us @luvandkrishi@gmail.com",
 			"error":        "User is being silly!",
 		})
 		return
@@ -280,10 +280,10 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 		})
 		return
 	}
-	if attending > family.Members {
+	if (attending+attendingChildren > family.Members) || (attending > family.Members) {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Hi! It seems that you've entered in more people than we have listed in your party! If, this is true and you are bringing someone that we may not have accounted for, please contact us @luvandkrishi.com",
+			"message":      "Hi! It seems that you've entered in more people than we have listed in your party! If this is true, and you are bringing someone that we may not have accounted for, please contact us @luvandkrishi@gmail.com",
 			"error":        "User is bringing more people than they should",
 		})
 		return

@@ -22,7 +22,7 @@ function RsvpPage(props) {
 
         else {
           console.log("Production environment running...")
-          return "http://www.luvandkrishi.com"
+          return "https://www.luvandkrishi.com"
         }
     }
 
@@ -63,8 +63,6 @@ function RsvpPage(props) {
           } else if (data.valid === false) {
             alert("Oops, your code and family name don't seem to match up. Please check your instructions for this information & try again");
           } else {
-            alert("Success! Logging in");
-
             setValidated(true)
             console.log(data.familyID)
             setFamilyIDN(data.familyID)
@@ -90,7 +88,7 @@ function RsvpPage(props) {
               <input
                 className="Rsvp-button"
                 type="button"
-                value="enter portal"
+                value="enter portal "
                 onClick={togglePopup}
               />
               </div>
