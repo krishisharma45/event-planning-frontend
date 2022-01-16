@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	secret_code                  = "secret_code"
-	family_name                  = "family_name"
+	familyCode                   = "secret_code"
+	lastName                     = "family_name"
 	httpSuccess                  = 200
 	httpClientError              = 400
 	httpServerError              = 500
@@ -68,7 +68,7 @@ func (app *application) getOneFamily(c *gin.Context) {
 
 //validateFamily will validate the family information for one family against secret_code
 func (app *application) validateFamily(c *gin.Context) {
-	secretCode, err := validateSecretCode(c.Params.ByName(secret_code))
+	secretCode, err := validateSecretCode(c.Params.ByName(familyCode))
 	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
@@ -78,7 +78,7 @@ func (app *application) validateFamily(c *gin.Context) {
 		return
 	}
 
-	familyName, err := validateFamilyName(c.Params.ByName(family_name))
+	familyName, err := validateFamilyName(c.Params.ByName(lastName))
 	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
@@ -224,45 +224,80 @@ func (app *application) rsvpToEvent(c *gin.Context) {
 	//TODO: luv add validation
 	familyID, err := validateId(c.Params.ByName("family_id"))
 	if err != nil {
-		c.JSON(httpClientError, gin.H{
+		c.JSON(httpServerError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Invalid family id",
+			"message":      "The family ID sent in is messed up. Should not appear",
 			"error":        err.Error(),
 		})
 		return
 	}
 	eventID, err := validateId(c.Params.ByName("event_id"))
 	if err != nil {
-		c.JSON(httpClientError, gin.H{
+		c.JSON(httpServerError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Invalid event id",
+			"message":      "The event ID sent in is messed up. Should not appear",
 			"error":        err.Error(),
 		})
+		return
 	}
-	//TODO: luv add validation
 	attending, err := validateAttending(c.Params.ByName("attending"))
 	if err != nil {
 		c.JSON(httpClientError, gin.H{
 			"Content-Type": "application/json",
-			"message":      "Invalid number attending",
+			"message":      "Hi family! The number of people attending seems to be incorrectly inputted with at least one of the events in your family. Remember, ths is total people in party. Try again!",
 			"error":        err.Error(),
 		})
+		return
+	}
+
+	attendingChildren, err := validateAttending(c.Params.ByName("attending_children"))
+	if err != nil {
+		c.JSON(httpClientError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "Hi family! The number of children attending seems to be incorrectly inputted with at least one of the events in your family. Try again!",
+			"error":        err.Error(),
+		})
+		return
+	}
+
+	// There shouldn't be more children than number attending
+	if attendingChildren > attending {
+		c.JSON(httpClientError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "Hi! It seems that you've entered in more children than adults in your party for one of the events! If this is true, please contact us @luvandkrishi@gmail.com",
+			"error":        "User is being silly!",
+		})
+		return
 	}
 
 	//check attending vs number of members
-	// family, err := app.models.DB.GetFamilies(familyID)
-	// if attending > family.Members {
+	family, err := app.models.DB.GetFamilies(familyID)
+	if err != nil {
+		c.JSON(httpServerError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "The familyID sent in is messed up to look up number attending. Should not appear",
+			"error":        err.Error(),
+		})
+		return
+	}
+	if (attending+attendingChildren > family.Members) || (attending > family.Members) {
+		c.JSON(httpClientError, gin.H{
+			"Content-Type": "application/json",
+			"message":      "Hi! It seems that you've entered in more people than we have listed in your party! If this is true, and you are bringing someone that we may not have accounted for, please contact us @luvandkrishi@gmail.com",
+			"error":        "User is bringing more people than they should",
+		})
+		return
+	}
 
-	// }
+	app.logger.Printf("Family %d will have %d total people and %d children attending %d event id", familyID, attending, attendingChildren, eventID)
 
-	app.logger.Printf("Family %d will have %d people attending %d event id", familyID, attending, eventID)
-
-	_, err = app.models.DB.RsvpToEvent(familyID, eventID, attending)
+	_, err = app.models.DB.RsvpToEvent(familyID, eventID, attending, attendingChildren)
 	if err != nil {
 		app.logger.Printf("Something went wrong with sql query to put rsvp %s", err)
 		app.logger.Printf("Family id is %v \n", familyID)
 		app.logger.Printf("Event id is %v \n", eventID)
-		app.logger.Printf("Number attending is %v \n", eventID)
+		app.logger.Printf("Number attending is %v \n", attending)
+		app.logger.Printf("Number of children attending is %v \n", attendingChildren)
 
 		c.JSON(httpServerError, gin.H{
 			"Content-Type": "application/json",

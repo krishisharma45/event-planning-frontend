@@ -7,18 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//enableCors is what allows us to accept traffic from the outside world
-//This should be where we allow access from different places/add headers/keys
 func (app *application) enableCORS(next *gin.Engine) gin.HandlerFunc {
 	return cors.New(cors.Config{
-		AllowOrigins:     []string{"http://*.luvandkrishi.com"},
+		AllowOrigins:     []string{app.config.corsEndpoint, "https://luvandkrishi.com"},
 		AllowMethods:     []string{"PUT", "GET"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://luvandkrishi.com"
-		},
-		MaxAge: 12 * time.Hour,
+		AllowWildcard:    true,
+		MaxAge:           12 * time.Hour,
 	})
 }

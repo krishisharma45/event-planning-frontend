@@ -45,10 +45,14 @@ type application struct {
 func main() {
 	var cfg config
 	flag.IntVar(&cfg.port, "port", 8080, "Server port to listen on")
-	flag.StringVar(&cfg.env, "env", "development", "Application environment")
+	flag.StringVar(&cfg.env, "env", getEnvironment(), "Application environment")
+	fmt.Printf("Application Environment is: %s\n", getEnvironment())
+	flag.StringVar(&cfg.corsEndpoint, "cors_endpoint", getEnvironmentEndpoint(cfg.env), "Cors Endpoint")
 	secretData, err := getSecretFromAws()
 	connectionString := getDsn(secretData)
-	fmt.Println(connectionString)
+	if cfg.env == "development" {
+		fmt.Printf("Connection string will be %s", connectionString)
+	}
 	flag.StringVar(&cfg.db.dsn, "dsn", connectionString, "Postgres connection string")
 	flag.StringVar(&cfg.jwt.secret, "jwt-secret", "2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160", "secret")
 	flag.Parse()

@@ -21,7 +21,8 @@ yarn-error.log*
 .vscode/
 venv/
 scratch/
-docs/
+docs/*
+.data/
 postgres-data/
 
 **/.terraform/*

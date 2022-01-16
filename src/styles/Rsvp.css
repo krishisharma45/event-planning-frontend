@@ -1,3 +1,15 @@
+
+@media screen and (min-width: 800px) {
+  .wrapper {
+   background-color: #0D1735;
+  }
+ 
+  .Rsvp-page {
+    max-width: 75vw;
+    margin: 0 auto;
+  }
+}
+ 
 .Rsvp-page {
   background-color: #0D1735;
     display: flex;
@@ -39,10 +51,11 @@
   border: none;
   background-color: #E88DAB;
   color: #0D1735;
-  padding-bottom: 0.3em;
-  padding-top: 0.3em;
-  padding-right: 0.5em;
-  padding-left: 0.5em;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
+  padding-right: 1.5vw;
+  padding-left: 2vw;
+  text-align: center;
   border-radius: 0.1em;
   box-shadow: -0.2em 0.2em 0.2em #000000;
 }

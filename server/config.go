@@ -16,10 +16,11 @@ import (
 )
 
 type config struct {
-	port int
-	env  string
-	db   database
-	jwt  struct {
+	port         int
+	env          string
+	corsEndpoint string
+	db           database
+	jwt          struct {
 		secret string
 	}
 }
@@ -96,4 +97,20 @@ func getDsn(secretData SecretData) string {
 		"password=%s dbname=%s sslmode=disable",
 		secretData.Host, port, secretData.DBUser, secretData.DbPass, secretData.DbName)
 	//return secretData.DbEngine + "://" + secretData.DBUser + ":" + secretData.DbPass + "@" + secretData.Host + ":" + secretData.Port + "/" + secretData.DbName + "?sslmode=disable"
+}
+
+func getEnvironment() string {
+	if goDotEnvVariable("REACT_APP_ENV") == "dev" {
+		return "development"
+	} else {
+		return "production"
+	}
+}
+
+func getEnvironmentEndpoint(environment string) string {
+	if environment == "development" {
+		return "http://localhost:58000"
+	} else {
+		return "https://luvandkrishi.com"
+	}
 }
